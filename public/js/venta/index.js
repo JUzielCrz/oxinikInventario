@@ -1,34 +1,10 @@
 $(document).ready(function () {
+    $("#nav-ico-venta").addClass("active");
 
     $(document).on("click","#btn-anadir-producto", insertar_producto);
     $(document).on("click","#btn-eliminar-fila", eliminar_fila);
 
-    $(document).on("click","#btn-save-compra", save_compra);
-
-    $("#nav-ico-compra").addClass("active");
-    
-    $('#provedor').keyup(function(){ 
-        var query = $(this).val();
-        if(query != '')
-        {
-            $.ajax({
-                method: "POST",
-                url:"search_provedor",
-                data:{'query':query,'_token': $('input[name=_token]').val(),},
-                success:function(data){
-                    $('#listar-provedores').fadeIn();  
-                    $('#listar-provedores').html(data);
-
-                }
-            });
-        }
-    });
-    
-
-    $(document).on('click', '.li-provedor', function(){  
-        $('#provedor').val($(this).text());  
-        $('#listar-provedores').fadeOut();  
-    });  
+    $(document).on("click","#btn-save-venta", save_venta);
 
 
     $('#producto').keyup(function(){ 
@@ -107,7 +83,7 @@ $(document).ready(function () {
         $(this).closest('tr').remove();
     }
 
-    function save_compra(){
+    function save_venta(){
         var campo= ['provedor','folio_factura','fecha'];
         var campovacio = [];
 
@@ -130,7 +106,7 @@ $(document).ready(function () {
 
             Swal.fire({
                 title: '¡Error!',
-                text: 'Faltan datos de compra',
+                text: 'Faltan datos de vente',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             })
@@ -152,8 +128,8 @@ $(document).ready(function () {
             if (result.isConfirmed) {
                 $.ajax({
                     method: "post",
-                    url: "/compra/save",
-                    data: $("#form-compra").serialize(), 
+                    url: "/venta/save",
+                    data: $("#form-venta").serialize(), 
                 }).done(function(msg){
                         Swal.fire('¡Guardado!', '', 'success')
                 }).fail(function (jqXHR, textStatus) {

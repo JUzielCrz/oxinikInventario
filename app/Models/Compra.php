@@ -12,11 +12,6 @@ class Compra extends Model
                         'folio_factura',
                         'fecha', 
                         'provedor',
-                        'cantidad',
-                        'producto',
-                        'subtotal',
-                        'iva',
-                        'total'
                         ];
     public $incrementing = true;
 }

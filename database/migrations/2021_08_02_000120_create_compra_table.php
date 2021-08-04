@@ -15,14 +15,12 @@ class CreateCompraTable extends Migration
     {
         Schema::create('compra', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('provedor_id');
+            $table->foreign('provedor_id')->references('id')
+                ->on('provedor')
+                ->onDelete('restrict');
             $table->string('folio_factura');
             $table->date('fecha');
-            $table->string('provedor');
-            $table->integer('cantidad');
-            $table->string('producto');
-            $table->float('subtotal');
-            $table->float('iva');
-            $table->float('total');
             $table->timestamps();
         });
     }

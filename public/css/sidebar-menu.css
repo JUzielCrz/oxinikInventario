@@ -5,7 +5,7 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #e8ebf7;
 }
 
 p {
@@ -63,7 +63,7 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: #284047;
     color: #fff;
     transition: all 0.3s;
 }
@@ -115,7 +115,7 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #587377;
 }
 
 #sidebar .sidebar-header strong {
@@ -135,8 +135,8 @@ span {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: #284047;
+    background: #587377;
 }
 
 #sidebar ul li a i {
@@ -146,7 +146,7 @@ span {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #587377;
 }
 
 a[data-toggle="collapse"] {
@@ -164,7 +164,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #587377;
 }
 
 ul.CTAs {
@@ -181,12 +181,12 @@ ul.CTAs a {
 
 a.download {
     background: #fff;
-    color: #7386D5;
+    color: #284047;
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
+    background: #587377 !important;
     color: #fff !important;
 }
 

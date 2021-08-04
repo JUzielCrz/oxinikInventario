@@ -18,11 +18,6 @@ class CreateVentaTable extends Migration
             $table->string('folio_factura');
             $table->date('fecha');
             $table->string('cliente');
-            $table->integer('cantidad');
-            $table->string('producto');
-            $table->float('subtotal');
-            $table->float('iva');
-            $table->float('total');
             $table->timestamps();
         });
     }

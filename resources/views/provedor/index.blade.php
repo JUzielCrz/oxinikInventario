@@ -3,32 +3,37 @@
 @section('content-sidebar')
 
     <div class="container">
-        <div class="row ml-4">
-            <div class="col-md-6">
-                <h4>Provedores</h4>
+        <div class="card">
+            <div class="card-header bg-verde-oscuro">
+                <div class="row ml-4">
+                    <div class="col-md-6">
+                        <h4>Provedores</h4>
+                    </div>
+                    <div class="col-md-5 text-right">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-insertar">
+                            <span class="fas fa-plus"></span>
+                            Agregar
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-5 text-right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-insertar">
-                    <span class="fas fa-plus"></span>
-                    Agregar
-                </button>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="table-data-provedor" class="table table-sm table-hover table-bordered">
+                        <thead style="font-size:14px">
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>DIRECCIÓN</th>
+                                <th>TELEFONO</th>
+                                <th>CORREO</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-        <hr>
-
-        <div class="table-responsive">
-            <table id="table-data-provedor" class="table table-sm table-hover table-bordered">
-                <thead style="font-size:14px">
-                    <tr>
-                        <th>NOMBRE</th>
-                        <th>DIRECCIÓN</th>
-                        <th>TELEFONO</th>
-                        <th>CORREO</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
     </div>
 
 

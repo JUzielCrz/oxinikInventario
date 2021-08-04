@@ -20,11 +20,6 @@ Route::get('/', 'Auth\LoginController@showLoginForm');
 
 Route::get('/home', 'HomeController@index');
 
-/* Compras */
-Route::get('/compra/index', 'CompraController@index');
-Route::post('/compra/save', 'CompraController@save');
-
-
 /* productos */
 Route::get('/producto/index', 'ProductoController@index');
 Route::get('/producto/data', 'ProductoController@data');
@@ -40,3 +35,15 @@ Route::post('/provedor/create', 'ProvedorController@create');
 Route::get('/provedor/show/{id}', 'ProvedorController@show');
 Route::post('/provedor/update/{id}', 'ProvedorController@update');
 Route::get('/provedor/destroy/{id}', 'ProvedorController@destroy');
+
+/* Compras */
+Route::get('/compra/index', 'CompraController@index');
+Route::post('/compra/search_provedor', 'CompraController@search_provedor');
+Route::post('/compra/search_producto', 'CompraController@search_producto');
+Route::post('/compra/save', 'CompraController@save');
+
+
+/* Compras */
+Route::get('/venta/index', 'VentaController@index');
+Route::post('/venta/search_producto', 'VentaController@search_producto');
+Route::post('/venta/save', 'VentaController@save');

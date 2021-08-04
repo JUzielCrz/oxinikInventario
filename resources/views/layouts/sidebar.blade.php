@@ -10,8 +10,8 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
-                <strong>BS</strong>
+                <h3>OXINIK</h3>
+                <strong>OX</strong>
             </div>
 
             <ul class="list-unstyled components">
