@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Producto;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+
+class ProductoController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
+    public function index()
+    {
+        return view('producto.index');
+    }
+
+    public function data(){
+            $tanques=Producto::
+            select('producto.*');
+            return DataTables::of(
+                $tanques
+            )                                                               
+            ->addColumn( 'btn-show', '<button class="btn btn-outline-secondary btn-class-show btn-xs" data-id="{{$id}}"><span class="far fa-eye"></span></button>')
+            ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$id}}"><span class="far fa-edit"></span></button>')
+            ->addColumn( 'btn-delete', '<button class="btn btn-outline-secondary btn-class-delete btn-xs" data-id="{{$id}}"><span class="fas fa-trash"></span></button>')
+            ->rawColumns(['btn-show','btn-edit','btn-delete'])
+            ->toJson();
+    }
+
+    public function create(Request $request){
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+        ]);
+
+        $producto = new Producto();
+        $producto->nombre = $request->nombre;
+        $producto->clave_sat = $request->clave_sat;
+        $producto->unidad_medida = $request->unidad_medida;
+        $producto->precio_unitario = $request->precio_unitario;
+        $producto->descripcion = $request->descripcion;
+
+        if($producto->save()){
+            return response()->json(['mensaje'=>'Registrado Correctamente']);
+        }
+    }
+
+    public function show(Producto $id){
+        return response()->json(['data'=>$id]);    
+        // return $data;
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+        ]);
+        $producto = Producto::find($id);
+        $producto->nombre = $request->nombre;
+        $producto->clave_sat = $request->clave_sat;
+        $producto->unidad_medida = $request->unidad_medida;
+        $producto->precio_unitario = $request->precio_unitario;
+        $producto->descripcion = $request->descripcion;
+        if($producto->save()){
+            return response()->json(['mensaje'=>' Editado Correctamente']);
+        }
+    }
+
+    public function destroy(Producto $id){
+
+        dump($id);
+        if($id->delete()){
+            return response()->json(['mensaje'=>'Eliminado Correctamente']);
+        }
+    }
+
+}
