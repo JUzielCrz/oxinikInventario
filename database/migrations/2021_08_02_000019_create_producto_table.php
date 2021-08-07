@@ -16,10 +16,10 @@ class CreateProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('unidad_medida');
             $table->string('descripcion')->nullable();
             $table->string('clave_sat')->nullable();
-            $table->string('unidad_medida')->nullable();
-            $table->string('precio_unitario')->nullable();
+            $table->float('precio_unitario')->nullable();
             $table->timestamps();
         });
     }

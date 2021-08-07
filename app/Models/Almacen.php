@@ -9,13 +9,10 @@ class Almacen extends Model
     protected $table = 'almacen';
     public $timestamps =  true;
     protected $fillable = ['id',
-                        'codigoSat',
-                        'producto', 
-                        'unidad_medida',
+                        'producto_id',
                         'inicial',
                         'entradas',
                         'salidas',
-                        'iva',
                         'stock',
                         'observaciones'
                         ];

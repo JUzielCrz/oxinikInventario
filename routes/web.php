@@ -36,6 +36,15 @@ Route::get('/provedor/show/{id}', 'ProvedorController@show');
 Route::post('/provedor/update/{id}', 'ProvedorController@update');
 Route::get('/provedor/destroy/{id}', 'ProvedorController@destroy');
 
+/* cliente */
+Route::get('/cliente/index', 'ClienteController@index');
+Route::get('/cliente/data', 'ClienteController@data');
+Route::post('/cliente/create', 'ClienteController@create');
+Route::get('/cliente/show/{id}', 'ClienteController@show');
+Route::post('/cliente/update/{id}', 'ClienteController@update');
+Route::get('/cliente/destroy/{id}', 'ClienteController@destroy');
+
+
 /* Compras */
 Route::get('/compra/index', 'CompraController@index');
 Route::post('/compra/search_provedor', 'CompraController@search_provedor');
@@ -43,7 +52,15 @@ Route::post('/compra/search_producto', 'CompraController@search_producto');
 Route::post('/compra/save', 'CompraController@save');
 
 
-/* Compras */
+/* Venta */
 Route::get('/venta/index', 'VentaController@index');
 Route::post('/venta/search_producto', 'VentaController@search_producto');
+Route::post('/venta/search_cliente', 'VentaController@search_cliente');
 Route::post('/venta/save', 'VentaController@save');
+
+/* Almacen */
+Route::get('/almacen/index', 'AlmacenController@index');
+Route::get('/almacen/data', 'AlmacenController@data');
+Route::get('/almacen/show/{id}', 'AlmacenController@show');
+Route::post('/almacen/update', 'AlmacenController@update');
+Route::post('/almacen/update_stock', 'AlmacenController@update_stock');

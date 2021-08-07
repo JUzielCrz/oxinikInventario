@@ -30,9 +30,10 @@ $(document).ready(function () {
         ajax: '/provedor/data',
         columns:[
             {data: 'nombre'},
-            {data: 'direccion'},
             {data: 'telefono'},
             {data: 'correo'},
+            {data: 'direccion'},
+            {data: 'referencia'},
             {data: 'btn-edit'},
             {data: 'btn-delete'},
         ]
@@ -101,7 +102,8 @@ $(document).ready(function () {
                 'nombre': $('#nombre_edit').val(),
                 'direccion': $('#direccion_edit').val(),
                 'telefono': $('#telefono_edit').val(),
-                'correo': $('#correo_edit').val()
+                'correo': $('#correo_edit').val(),
+                'referencia': $('#referencia_edit').val()
                 },
         })
             .done(function (msg) {
@@ -144,6 +146,7 @@ $(document).ready(function () {
         $("#direccion").val("");
         $("#telefono").val("");
         $("#correo").val("");
+        $("#referencia").val("");
     }   
 
     function destroy_fila(){
@@ -185,6 +188,7 @@ $(document).ready(function () {
         $("#direccion"+identificador).removeClass("is-invalid");
         $("#telefono"+identificador).removeClass("is-invalid");
         $("#correo"+identificador).removeClass("is-invalid");
+        $("#referencia"+identificador).removeClass("is-invalid");
     }  
 
     $('.telefono').keypress(function (event) {

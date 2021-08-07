@@ -29,6 +29,28 @@ $(document).ready(function () {
         $('#listar-productos').fadeOut();  
     });  
 
+    $('#cliente').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '')
+        {
+            $.ajax({
+                method: "POST",
+                url:"search_cliente",
+                data:{'query':query,'_token': $('input[name=_token]').val(),},
+                success:function(data){
+                    $('#listar-clientes').fadeIn();  
+                    $('#listar-clientes').html(data);
+
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.li-cliente', function(){  
+        $('#cliente').val($(this).text());  
+        $('#listar-clientes').fadeOut();  
+    });  
+
     
     function insertar_producto() {
         var campo= ['producto','cantidad','subtotal','iva', 'total', 'facturado'];
@@ -51,40 +73,60 @@ $(document).ready(function () {
                 $("#"+campovacio[index]+'Error').text('Necesario');
             });
 
-            Swal.fire({
-                title: '¡Error!',
-                text: 'Faltan datos del producto',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            })
+            mensaje_error('Faltan datos del producto');
 
             return false;
         }
 
-        
+        var boolRepetido=false;
+        $(".tr-class-producto").each(function(index, value){
+            var valores = $(this).find("td")[0].innerHTML;
+            if(valores == $("#producto").val()){
+                boolRepetido=true;
+            }
+        })
+
+        if(boolRepetido){
+            mensaje_error('Este producto ya esta agregado a la lista');
+            return false;
+        }
 
         $('#tbody-lista-productos').append(
-            "<tr>"+
+            "<tr class='tr-class-producto'>"+
                 "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
-                "<td>"+$("#cantidad").val()+"</td><input type='hidden' name='arrCantidad[]' value='"+$('#cantidad').val() +"'></input>"+
+                "<td class='text-center'>"+"<input type='number' name='arrCantidad[]' value='"+$('#cantidad').val() +"' id='arrCantidad' class='form-control form-control-sm numero-entero-positivo' style='width:10rem' ></input>"+"</td>"+
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
                 "<td>"+$("#iva").val()+"</td><input type='hidden' name='arrIva[]' value='"+$('#iva').val() +"'></input>"+
                 "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
-                "<td>"+$("#facturado").val()+"</td><input type='hidden' name='arrFacturado[]' value='"+$('#facturado').val() +"'></input>"+
                 "<td>"+ "<button type='button' class='btn btn-naranja' id='btn-eliminar-fila'><span class='fas fa-window-close'></span></button>" +"</td>"+
             "</tr>"
         );
-
+        actualizarTotal();
+        limpiar_campos_producto();
         
     }
 
-    
+    function actualizarTotal(){
+        var sum_totales = 0;
+
+        $(".tr-class-producto").each(function(){
+            var precio_producto=$(this).find("td")[4].innerHTML;
+            sum_totales=sum_totales+parseFloat(precio_producto);
+        })
+        $('#h5-total-general').replaceWith(
+            '<h5 id="h5-total-general">Total: $ '+Intl.NumberFormat('es-MX').format(sum_totales)+'</h5>'
+        );
+        $('#total_general').val(sum_totales)
+    }
+
     function eliminar_fila(){
         $(this).closest('tr').remove();
+        actualizarTotal();
     }
 
     function save_venta(){
-        var campo= ['provedor','folio_factura','fecha'];
+
+        var campo= ['cliente','folio_factura','fecha'];
         var campovacio = [];
 
         $.each(campo, function(index){
@@ -104,18 +146,13 @@ $(document).ready(function () {
                 $("#"+campovacio[index]+'Error').text('Necesario');
             });
 
-            Swal.fire({
-                title: '¡Error!',
-                text: 'Faltan datos de vente',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            })
+            mensaje_error('Faltan datos de venta');
 
             return false;
         }
 
-        var folio_factura= $('#folio_factura').val().replace(/ /g,'');
-
+        // var folio_factura= $('#folio_factura').val().replace(/ /g,'');
+        
         Swal.fire({
             icon: 'question',
             title: 'Seguro que deseas continuar?',
@@ -124,14 +161,23 @@ $(document).ready(function () {
             cancelButtonText: 'Cancelar',
             cancelButtonColor: '#d33',
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
+            
+            
             if (result.isConfirmed) {
                 $.ajax({
                     method: "post",
                     url: "/venta/save",
                     data: $("#form-venta").serialize(), 
                 }).done(function(msg){
+                    if(msg.mensaje =='success'){
                         Swal.fire('¡Guardado!', '', 'success')
+                        limpiar_campos_compra();
+                        $("#tbody-lista-productos").empty();
+                    }else{
+                        mensaje_error(msg.mensaje);
+                    }
+                    
+                        
                 }).fail(function (jqXHR, textStatus) {
                     //Si existe algun error entra aqui
                     Swal.fire('Verifica tus datos!', '', 'error')
@@ -149,9 +195,32 @@ $(document).ready(function () {
             } 
         })
 
-
-
         
+    }
+
+    function mensaje_error(mensaje){
+        Swal.fire({
+            title: '¡Error!',
+            text: mensaje,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        })
+    }
+    function limpiar_campos_producto(){
+        $("#producto").val('')
+        $("#cantidad").val('')
+        $("#subtotal").val('')
+        $("#iva").val('')
+        $("#total").val('')
+    }
+    function limpiar_campos_compra(){
+        $("#cliente").val('')
+        $("#folio_factura").val('')
+        $("#fecha").val('')
+        $("#total_general").val(0)
+        $('#h5-total-general').replaceWith(
+            '<h5 id="h5-total-general">Total: $ 0.0</h5>'
+        );
     }
 
     $('.numero-entero-positivo').keypress(function (event) {

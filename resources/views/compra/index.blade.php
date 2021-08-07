@@ -96,6 +96,12 @@
 
             <hr>
 
+            <div class="row">
+                <div class="col text-right mr-3">
+                    <h5 id="h5-total-general">Total: $ 0.0</h5>
+                    <input type="hidden" name="total_general" id="total_general" value=0>
+                </div>
+            </div>
             
         </div>
     </div>

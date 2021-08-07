@@ -15,9 +15,13 @@ class CreateVentaTable extends Migration
     {
         Schema::create('venta', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')
+                ->on('cliente')
+                ->onDelete('restrict');
             $table->string('folio_factura');
             $table->date('fecha');
-            $table->string('cliente');
+            $table->float('total_general');
             $table->timestamps();
         });
     }

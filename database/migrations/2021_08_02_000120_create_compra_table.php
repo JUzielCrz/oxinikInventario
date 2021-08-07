@@ -21,6 +21,7 @@ class CreateCompraTable extends Migration
                 ->onDelete('restrict');
             $table->string('folio_factura');
             $table->date('fecha');
+            $table->float('total_general');
             $table->timestamps();
         });
     }

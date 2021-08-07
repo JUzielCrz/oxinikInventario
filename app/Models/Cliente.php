@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Provedor extends Model
+class Cliente extends Model
 {
-    protected $table = 'provedor';
+    protected $table = 'cliente';
     public $timestamps =  true;
     protected $fillable = ['id',
                         'nombre',
-                        'direccion',
-                        'referencia', 
                         'telefono',
-                        'correo'
+                        'correo',
+                        'rfc',
+                        'direccion', 
+                        'referencia',
+                        'observaciones'
                         ];
     public $incrementing = true;
 }

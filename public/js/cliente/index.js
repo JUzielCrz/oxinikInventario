@@ -1,9 +1,10 @@
+
 $(document).ready(function () {
 
-    $("#nav-ico-producto").addClass("active");
+    $("#nav-ico-cliente").addClass("active");
     
 
-    var listtabla = $('#table-data-producto').DataTable({
+    var listtabla = $('#table-data-cliente').DataTable({
         language: {
             "decimal": "",
             "emptyTable": "No hay información",
@@ -26,14 +27,15 @@ $(document).ready(function () {
         },
         processing: true,
         serverSider: true,
-        ajax: '/producto/data',
+        ajax: '/cliente/data',
         columns:[
             {data: 'nombre'},
-            {data: 'descripcion'},
-            {data: 'clave_sat'},
-            {data: 'unidad_medida'}, //aqui va estatus
-            {data: 'precio_unitario'},
-            // {data: 'btn-show'},
+            {data: 'telefono'},
+            {data: 'correo'},
+            {data: 'rfc'},
+            {data: 'direccion'},
+            {data: 'referencia'},
+            {data: 'observaciones'},
             {data: 'btn-edit'},
             {data: 'btn-delete'},
         ]
@@ -53,7 +55,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "/producto/create",
+            url: "/cliente/create",
             data: $("#form-create").serialize(),
         })
             .done(function (msg) {
@@ -82,7 +84,7 @@ $(document).ready(function () {
 
     function llenar_campos_edit() {
         remove_class_invalid("_edit");
-        $.get('/producto/show/' + $(this).data('id') , function(msg) {
+        $.get('/cliente/show/' + $(this).data('id') , function(msg) {
             $.each(msg.data, function (key, value) {
                 var variable = "#" + key + "_edit";
                 $(variable).val(value);
@@ -100,11 +102,12 @@ $(document).ready(function () {
                 '_token': $('input[name=_token]').val(),
                 'id': $('#id_edit').val(),
                 'nombre': $('#nombre_edit').val(),
-                'clave_sat': $('#clave_sat_edit').val(),
-                'unidad_medida': $('#unidad_medida_edit').val(),
-                'precio_unitario': $('#precio_unitario_edit').val(),
-                'descripcion': $('#descripcion_edit').val(),
-                'descripcion': $('#stock_inicial').val()
+                'telefono': $('#telefono_edit').val(),
+                'correo': $('#correo_edit').val(),
+                'rfc': $('#rfc_edit').val(),
+                'direccion': $('#direccion_edit').val(),
+                'referencia': $('#referencia_edit').val(),
+                'observaciones': $('#observaciones_edit').val()
                 },
         })
             .done(function (msg) {
@@ -144,11 +147,12 @@ $(document).ready(function () {
 
     function limpiar_campos() {
         $("#nombre").val("");
-        $("#clave_sat").val("");
-        $("#unidad_medida").val("");
-        $("#precio_unitario").val("");
-        $("#descripcion").val("");
-        $("#stock_inicial").val("");
+        $("#telefono").val("");
+        $("#correo").val("");
+        $("#rfc").val("");
+        $("#direccion").val("");
+        $("#referencia").val("");
+        $("#observaciones").val("");
     }   
 
     function destroy_fila(){
@@ -163,7 +167,6 @@ $(document).ready(function () {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log();
 
                 $.ajax({
                     method: "get",
@@ -172,13 +175,13 @@ $(document).ready(function () {
                     listtabla.ajax.reload(null,false); 
                     Swal.fire(
                         '¡Eliminado!',
-                        'Tu producto ha sido eliminado',
+                        'El cliente ha sido eliminado',
                         'success'
                     )
                 }).fail(function (){
                     Swal.fire(
                         'Error!',
-                        'El producto no se puede eliminar',
+                        'El cliente no se puede eliminar',
                         'error'
                     )
                 });
@@ -188,12 +191,19 @@ $(document).ready(function () {
 
     function remove_class_invalid(identificador) {
         $("#nombre"+identificador).removeClass("is-invalid");
-        $("#clave_sat"+identificador).removeClass("is-invalid");
-        $("#unidad_medida"+identificador).removeClass("is-invalid");
-        $("#precio_unitario"+identificador).removeClass("is-invalid");
-        $("#descripcion"+identificador).removeClass("is-invalid");
-        $("#stock_inicial"+identificador).removeClass("is-invalid");
+        $("#telefono"+identificador).removeClass("is-invalid");
+        $("#correo"+identificador).removeClass("is-invalid");
+        $("#rfc"+identificador).removeClass("is-invalid");
+        $("#direccion"+identificador).removeClass("is-invalid");
+        $("#referencia"+identificador).removeClass("is-invalid");
+        $("#observaciones"+identificador).removeClass("is-invalid");
     }  
+
+    $('.telefono').keypress(function (event) {
+        if (this.value.length === 10) {
+            return false;
+        }
+    });
 
     $('.numero-entero-positivo').keypress(function (event) {
         // console.log(event.charCode);
@@ -209,17 +219,5 @@ $(document).ready(function () {
         return true;
     });
 
-    $('.numero-decimal-positivo').keypress(function (event) {
-        // console.log(event.charCode);
-        if (
-            event.charCode == 43 || //+
-            event.charCode == 45 || //-
-            event.charCode == 69 || //E
-            event.charCode == 101 //e
-            ){
-            return false;
-        } 
-        return true;
-    });
 
 });

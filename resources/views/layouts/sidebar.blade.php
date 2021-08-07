@@ -30,7 +30,8 @@
                 <li id="nav-ico-venta" ><a href="{{ url('/venta/index') }}"><i class="fas fa-file-invoice-dollar"></i>Venta</a></li>
                 <li id="nav-ico-almacen" ><a href="{{ url('/almacen/index') }}"><i class="fas fa-warehouse"></i>Almacen</a></li>
                 <li id="nav-ico-producto" ><a href="{{ url('/producto/index') }}"><i class="fas fa-shopping-basket"></i>Productos</a></li>
-                <li id="nav-ico-provedor" ><a href="{{ url('/provedor/index') }}"><i class="far fa-id-card"></i>Provedores</a></li>
+                <li id="nav-ico-provedor" ><a href="{{ url('/provedor/index') }}"><i class="fas fa-user-tag"></i></i>Provedores</a></li>
+                <li id="nav-ico-cliente" ><a href="{{ url('/cliente/index') }}"><i class="fas fa-users"></i>Clientes</a></li>
 
             </ul>
 
@@ -59,7 +60,24 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item dropdown dropleft">
+                                <button class="btn btn-outline-secondary dropdown-toggle nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    Nombre Usuario
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Mi perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" 
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form1').submit();">Cerar Sesion</a>
+                                    <form id="logout-form1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+
+
+                            {{-- <li class="nav-item active">
                                 <a class="nav-link" href="#">Page</a>
                             </li>
                             <li class="nav-item">
@@ -70,7 +88,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Page</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>

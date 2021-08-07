@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provedor;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class ProvedorController extends Controller
+class ClienteController extends Controller
 {
     public function __construct()
     {
@@ -16,12 +16,12 @@ class ProvedorController extends Controller
     
     public function index()
     {
-        return view('provedor.index');
+        return view('cliente.index');
     }
 
     public function data(){
-            $tanques=Provedor::
-            select('provedor.*');
+            $tanques=Cliente::
+            select('cliente.*');
             return DataTables::of(
                 $tanques
             )                                                               
@@ -37,19 +37,21 @@ class ProvedorController extends Controller
             'nombre' => ['required', 'string', 'max:255'],
         ]);
 
-        $provedor = new Provedor();
-        $provedor->nombre = $request->nombre;
-        $provedor->direccion = $request->direccion;
-        $provedor->referencia = $request->referencia;
-        $provedor->telefono = $request->telefono;
-        $provedor->correo = $request->correo;
+        $cliente = new Cliente();
+        $cliente->nombre = $request->nombre;
+        $cliente->telefono = $request->telefono;
+        $cliente->correo = $request->correo;
+        $cliente->rfc = $request->rfc;
+        $cliente->direccion = $request->direccion;
+        $cliente->referencia = $request->referencia;
+        $cliente->observaciones = $request->observaciones;
 
-        if($provedor->save()){
+        if($cliente->save()){
             return response()->json(['mensaje'=>'Registrado Correctamente']);
         }
     }
 
-    public function show(Provedor $id){
+    public function show(Cliente $id){
         return response()->json(['data'=>$id]);    
         // return $data;
     }
@@ -60,18 +62,20 @@ class ProvedorController extends Controller
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
         ]);
-        $provedor = Provedor::find($id);
-        $provedor->nombre = $request->nombre;
-        $provedor->direccion = $request->direccion;
-        $provedor->referencia = $request->referencia;
-        $provedor->telefono = $request->telefono;
-        $provedor->correo = $request->correo;
-        if($provedor->save()){
+        $cliente = Cliente::find($id);
+        $cliente->nombre = $request->nombre;
+        $cliente->telefono = $request->telefono;
+        $cliente->correo = $request->correo;
+        $cliente->rfc = $request->rfc;
+        $cliente->direccion = $request->direccion;
+        $cliente->referencia = $request->referencia;
+        $cliente->observaciones = $request->observaciones;
+        if($cliente->save()){
             return response()->json(['mensaje'=>' Editado Correctamente']);
         }
     }
 
-    public function destroy(Provedor $id){
+    public function destroy(Cliente $id){
 
         if($id->delete()){
             return response()->json(['mensaje'=>'Eliminado Correctamente']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Almacen;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -35,6 +36,8 @@ class ProductoController extends Controller
     public function create(Request $request){
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
+            'unidad_medida' => ['required'],
+            'stock_inicial' => ['required'],
         ]);
 
         $producto = new Producto();
@@ -43,10 +46,16 @@ class ProductoController extends Controller
         $producto->unidad_medida = $request->unidad_medida;
         $producto->precio_unitario = $request->precio_unitario;
         $producto->descripcion = $request->descripcion;
+        $producto->save();
 
-        if($producto->save()){
-            return response()->json(['mensaje'=>'Registrado Correctamente']);
-        }
+        $almacen=new Almacen();
+        $almacen->producto_id = $producto->id;
+        $almacen->inicial = $request->stock_inicial;
+        $almacen->stock = $request->stock_inicial;
+        $almacen->save();
+
+        return response()->json(['mensaje'=>'Registrado Correctamente']);
+
     }
 
     public function show(Producto $id){
@@ -73,7 +82,6 @@ class ProductoController extends Controller
 
     public function destroy(Producto $id){
 
-        dump($id);
         if($id->delete()){
             return response()->json(['mensaje'=>'Eliminado Correctamente']);
         }

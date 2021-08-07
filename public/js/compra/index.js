@@ -88,7 +88,7 @@ $(document).ready(function () {
         
 
         $('#tbody-lista-productos').append(
-            "<tr>"+
+            "<tr class='tr-class-producto'>"+
                 "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
                 "<td>"+$("#cantidad").val()+"</td><input type='hidden' name='arrCantidad[]' value='"+$('#cantidad').val() +"'></input>"+
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
@@ -99,12 +99,27 @@ $(document).ready(function () {
             "</tr>"
         );
 
-        
+        actualizarTotal();
+
+        limpiar_campos_producto();
     }
 
+    function actualizarTotal(){
+        var sum_totales = 0;
+
+        $(".tr-class-producto").each(function(){
+            var precio_producto=$(this).find("td")[4].innerHTML;
+            sum_totales=sum_totales+parseFloat(precio_producto);
+        })
+        $('#h5-total-general').replaceWith(
+            '<h5 id="h5-total-general">Total: $ '+Intl.NumberFormat('es-MX').format(sum_totales)+'</h5>'
+        );
+        $('#total_general').val(sum_totales)
+    }
     
     function eliminar_fila(){
         $(this).closest('tr').remove();
+        actualizarTotal();
     }
 
     function save_compra(){
@@ -156,6 +171,8 @@ $(document).ready(function () {
                     data: $("#form-compra").serialize(), 
                 }).done(function(msg){
                         Swal.fire('¡Guardado!', '', 'success')
+                        limpiar_campos_compra();
+                        $("#tbody-lista-productos").empty();
                 }).fail(function (jqXHR, textStatus) {
                     //Si existe algun error entra aqui
                     Swal.fire('Verifica tus datos!', '', 'error')
@@ -172,10 +189,25 @@ $(document).ready(function () {
                 
             } 
         })
-
-
-
         
+    }
+
+    function limpiar_campos_producto(){
+        $("#producto").val('')
+        $("#cantidad").val('')
+        $("#subtotal").val('')
+        $("#iva").val('')
+        $("#total").val('')
+        $("#facturado").val('')
+    }
+    function limpiar_campos_compra(){
+        $("#provedor").val('')
+        $("#folio_factura").val('')
+        $("#fecha").val('')
+        $("#total_general").val(0)
+        $('#h5-total-general').replaceWith(
+            '<h5 id="h5-total-general">Total: $ 0.0</h5>'
+        );
     }
 
     $('.numero-entero-positivo').keypress(function (event) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Almacen;
 use App\Models\Compra;
 use App\Models\CompraProducto;
 use App\Models\Producto;
@@ -67,11 +68,11 @@ class CompraController extends Controller
             $compra = new Compra();
             $compra->provedor_id = intval($cadenaProvedor[0]);
             $compra->folio_factura = $request->folio_factura;
+            $compra->total_general = $request->total_general;
             $compra->fecha = $request->fecha;
             
             if($compra->save()){
                 foreach( $request->arrProducto AS $indice => $g){
-                    
                     $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
                     $productos=new CompraProducto();
                     $productos->compra_id = $compra->id;
@@ -82,10 +83,18 @@ class CompraController extends Controller
                     $productos->total = $request->arrTotal[$indice];
                     $productos->facturado = $request->arrFacturado[$indice];
                     $productos->save();
+
+                    $actualizarstock = Almacen::where('producto_id',$productos->id)->first();
+                    $sumstock=$actualizarstock->stock+$productos->cantidad;
+                    $sumentradas=$actualizarstock->entradas+$productos->cantidad;
+                    $actualizarstock->stock = $sumstock;
+                    $actualizarstock->entradas = $sumentradas;
+                    $actualizarstock->save();
                 }
-                
                 return response()->json(['mensaje'=>'success']);
             }
+
+            
         }
     }
 }

@@ -29,9 +29,19 @@
     </div>
 
     <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="">Stock Inicial</label>
+            <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-entero-positivo" placeholder="#" required>
+        </div>
+    </div>
+
+    <div class="form-row">
         <div class="form-group col">
             <label for="">Descripción</label>
             <textarea name="descripcion" id="descripcion" cols="30" rows="2" class="form-control form-control-sm"></textarea>
         </div>    
     </div>
+
+    
+
 </form>

@@ -15,23 +15,19 @@ class CreateAlmacenTable extends Migration
     {
         Schema::create('almacen', function (Blueprint $table) {
             $table->id();
-            $table->string('codigoSat');
-            $table->string('producto');
-            $table->string('unidad_medida');
-            $table->string('inicial');
-            $table->string('entradas');
-            $table->string('salidas');
-            $table->string('stock');
-            $table->string('observaciones');
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')
+                ->on('producto')
+                ->onDelete('restrict');
+            $table->string('inicial')->default(0);
+            $table->string('entradas')->nullable()->default(0);
+            $table->string('salidas')->nullable()->default(0);
+            $table->string('stock')->default(0);
+            $table->string('observaciones')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('almacen');

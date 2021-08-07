@@ -1,3 +1,5 @@
+
+
 @extends('layouts.sidebar')
 
 @section('content-sidebar')
@@ -7,7 +9,7 @@
             <div class="card-header bg-verde-oscuro">
                 <div class="row ml-4">
                     <div class="col-md-6">
-                        <h4>Provedores</h4>
+                        <h4>Clientes</h4>
                     </div>
                     <div class="col-md-5 text-right">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-insertar">
@@ -19,12 +21,14 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-data-provedor" class="table table-sm table-hover table-bordered">
+                    <table id="table-data-cliente" class="table table-sm table-hover table-bordered">
                         <thead style="font-size:14px">
                             <tr>
                                 <th>NOMBRE</th>
                                 <th>TELEFONO</th>
                                 <th>CORREO</th>
+                                <th>RFC</th>
+                                <th>OBSERVACIONES</th>
                                 <th>DIRECCIÓN</th>
                                 <th>REFERENCIA</th>
                                 <th></th>
@@ -44,13 +48,13 @@
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Provedor</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Cliente</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                @include('provedor.create')
+                @include('cliente.create')
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -65,13 +69,13 @@
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Provedor</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Nuevo cliente</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                @include('provedor.edit')
+                @include('cliente.edit')
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -87,4 +91,7 @@
 @include('layouts.scripts')
 
 <!--Scripts-->
-<script src="{{ asset('js/provedor/index.js') }}"></script>
+<script src="{{ asset('js/cliente/index.js') }}"></script>
+
+
+

@@ -11,7 +11,8 @@ class Compra extends Model
     protected $fillable = ['id',
                         'folio_factura',
                         'fecha', 
-                        'provedor',
+                        'provedor_id',
+                        'total_general'
                         ];
     public $incrementing = true;
 }
