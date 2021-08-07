@@ -61,9 +61,10 @@ class CompraController extends Controller
 
         $request->validate([
             'provedor' => ['required'],
-            'folio_factura' => ['required', 'numeric'],
+            
         ]);
         if(count($request->arrProducto) > 0){
+
             $cadenaProvedor=explode('- ', $request->provedor);
             $compra = new Compra();
             $compra->provedor_id = intval($cadenaProvedor[0]);
