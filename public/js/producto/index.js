@@ -26,7 +26,7 @@ $(document).ready(function () {
         },
         processing: true,
         serverSider: true,
-        ajax: '/producto/data',
+        ajax: '../producto/data',
         columns:[
             {data: 'nombre'},
             {data: 'descripcion'},

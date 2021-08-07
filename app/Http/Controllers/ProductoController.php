@@ -81,8 +81,10 @@ class ProductoController extends Controller
     }
 
     public function destroy(Producto $id){
+        $almacen= Almacen::where('producto_id',$id->id);
+        $almacen->delete();
+        if($id->delete()){    
 
-        if($id->delete()){
             return response()->json(['mensaje'=>'Eliminado Correctamente']);
         }
     }
