@@ -85,7 +85,8 @@ class CompraController extends Controller
                     $productos->facturado = $request->arrFacturado[$indice];
                     $productos->save();
 
-                    $actualizarstock = Almacen::where('producto_id',$productos->id)->first();
+                    $actualizarstock = Almacen::where('producto_id',$productos->producto_id)->first();
+                    dump($actualizarstock);
                     $sumstock=$actualizarstock->stock+$productos->cantidad;
                     $sumentradas=$actualizarstock->entradas+$productos->cantidad;
                     $actualizarstock->stock = $sumstock;
