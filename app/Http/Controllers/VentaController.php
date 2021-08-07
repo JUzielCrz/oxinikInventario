@@ -69,7 +69,7 @@ class VentaController extends Controller
                 $actualizarstock = Almacen::where('producto_id',intval($cadenaProducto[0]))->first();
                 $sumstock=$actualizarstock->stock-$request->arrCantidad[$valid];
                 if($sumstock<0){
-                    return response()->json(['mensaje'=>'sin-stock']);
+                    return response()->json(['mensaje'=>'No hay stock suficiente']);
                 };
             }
 
