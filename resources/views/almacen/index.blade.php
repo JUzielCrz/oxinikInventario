@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header bg-verde-oscuro">
+            <div class="card-header ">
                 <div class="row ml-4">
                     <div class="col">
                         <h4>ALMACÉN</h4>
@@ -13,8 +13,8 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-data-almacen" class="table table-sm table-hover table-bordered">
-                        <thead style="font-size:14px">
+                    <table id="table-data-almacen" class="table table-sm table-hover table-bordered" style="font-size:14px">
+                        <thead style="font-size:12px">
                             <tr>
                                 <th>PRODUCTO</th>
                                 <th>U.M.</th>
@@ -23,6 +23,9 @@
                                 <th>ENTRADAS</th>
                                 <th>SALIDAS</th>
                                 <th>STOCK</th>
+                                <th>P.COMPRA</th>
+                                <th>P.VENTA</th>
+                                <th>P.MINIMO</th>
                                 <th>OBSERVACIONES</th>
                                 <th></th>
                                 <th></th>

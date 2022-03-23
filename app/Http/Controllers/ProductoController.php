@@ -44,7 +44,9 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
         $producto->unidad_medida = $request->unidad_medida;
-        $producto->precio_unitario = $request->precio_unitario;
+        $producto->precio_compra = $request->precio_compra;
+        $producto->precio_venta = $request->precio_venta;
+        $producto->precio_minimo = $request->precio_minimo;
         $producto->descripcion = $request->descripcion;
         $producto->save();
 
@@ -73,7 +75,9 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
         $producto->unidad_medida = $request->unidad_medida;
-        $producto->precio_unitario = $request->precio_unitario;
+        $producto->precio_compra = $request->precio_compra;
+        $producto->precio_venta = $request->precio_venta;
+        $producto->precio_minimo = $request->precio_minimo;
         $producto->descripcion = $request->descripcion;
         if($producto->save()){
             return response()->json(['mensaje'=>' Editado Correctamente']);

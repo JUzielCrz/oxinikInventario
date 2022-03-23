@@ -13,7 +13,7 @@ class Provedor extends Model
                         'direccion',
                         'referencia', 
                         'telefono',
-                        'correo'
+                        'correo',
                         ];
     public $incrementing = true;
 }

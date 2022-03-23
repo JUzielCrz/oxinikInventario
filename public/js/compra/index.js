@@ -123,7 +123,7 @@ $(document).ready(function () {
     }
 
     function save_compra(){
-        var campo= ['provedor','folio_factura','fecha'];
+        var campo= ['provedor','folio','tipo_folio','fecha'];
         var campovacio = [];
 
         $.each(campo, function(index){
@@ -153,7 +153,7 @@ $(document).ready(function () {
             return false;
         }
 
-        var folio_factura= $('#folio_factura').val().replace(/ /g,'');
+        var folio= $('#folio').val().replace(/ /g,'');
 
         Swal.fire({
             icon: 'question',
@@ -202,7 +202,8 @@ $(document).ready(function () {
     }
     function limpiar_campos_compra(){
         $("#provedor").val('')
-        $("#folio_factura").val('')
+        $("#tipo_folio").val('')
+        $("#folio").val('')
         $("#fecha").val('')
         $("#total_general").val(0)
         $('#h5-total-general').replaceWith(

@@ -8,6 +8,7 @@ use App\Models\Producto;
 use App\Models\Venta;
 use App\Models\VentaProducto;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class VentaController extends Controller
 {
@@ -77,9 +78,11 @@ class VentaController extends Controller
 
             $venta = new Venta();
             $venta->cliente_id = intval($cadenaCliente[0]);
-            $venta->folio_factura = $request->folio_factura;
+            $venta->tipo_folio = $request->tipo_folio;
+            $venta->folio = $request->folio;
             $venta->fecha = $request->fecha;
             $venta->total_general = $request->total_general;
+            $venta->observaciones = $request->total_general;
             
             if($venta->save()){
 
@@ -108,4 +111,30 @@ class VentaController extends Controller
         }
     }
 
+    public function index_nota(){
+        return view('venta.notas.lista');
+    }
+
+    public function nota_data(){
+        $notas=Venta::
+        join('cliente','cliente.id','venta.cliente_id')
+        ->select('nombre as cliente', 'tipo_folio', 'folio', 'fecha','total_general', 'venta.id as idVenta');
+        return DataTables::of(
+            $notas
+        )
+        ->addColumn( 'btnShow', '<a class="btn btn-sm btn-verde" href="{{route(\'venta.nota.show\', $idVenta)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>')
+        // ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
+        // ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-xs" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
+        ->rawColumns(['btnShow'])
+        ->toJson();
+    }
+    public function nota_show($idVenta){
+        $nota=Venta::
+        join('cliente', 'cliente.id','=', 'venta.cliente_id')
+        ->select('cliente.nombre as cliente','venta.*')
+        ->where('venta.id',$idVenta)->first();
+        $productos=VentaProducto::where('venta_id',$idVenta)->get();
+        $data=["nota"=>$nota, "productos"=>$productos];
+        return view('venta.notas.show', $data);
+    }
 }

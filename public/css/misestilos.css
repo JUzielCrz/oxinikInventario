@@ -1,9 +1,30 @@
-.bg-verde-oscuro, .btn-verde-oscuro{
-    background: #284047;
-    color: #fff;
+.card-header {
+    background: #517e3f;
+    color: #fcf7f8;
 }
 
-.bg-verde-intermedio, .btn-verde-intermedio{
-    background: #587377;
-    color: #fff;
+th {
+    background: #526669;
+    color: #fcf7f8;
 }
+.page-link{
+    background: #526669;
+    color: #fcf7f8;
+}
+
+.bg-verde-oscuro{
+    background: #517e3f;
+    color: #fcf7f8;
+}
+
+.bg-amarillo, .btn-amarillo{
+    color: #181818;
+    background: #FFC338 ;
+}
+
+.btn-amarillo:hover{
+    background: #e2a30e;
+    color: #181818;
+}
+
+

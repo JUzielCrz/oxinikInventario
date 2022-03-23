@@ -31,8 +31,10 @@ $(document).ready(function () {
             {data: 'nombre'},
             {data: 'descripcion'},
             {data: 'clave_sat'},
-            {data: 'unidad_medida'}, //aqui va estatus
-            {data: 'precio_unitario'},
+            {data: 'unidad_medida'},
+            {data: 'precio_compra'},
+            {data: 'precio_venta'},
+            {data: 'precio_minimo'},
             // {data: 'btn-show'},
             {data: 'btn-edit'},
             {data: 'btn-delete'},
@@ -102,7 +104,9 @@ $(document).ready(function () {
                 'nombre': $('#nombre_edit').val(),
                 'clave_sat': $('#clave_sat_edit').val(),
                 'unidad_medida': $('#unidad_medida_edit').val(),
-                'precio_unitario': $('#precio_unitario_edit').val(),
+                'precio_compra': $('#precio_compra_edit').val(),
+                'precio_venta': $('#precio_venta_edit').val(),
+                'precio_minimo': $('#precio_minimo_edit').val(),
                 'descripcion': $('#descripcion_edit').val(),
                 'descripcion': $('#stock_inicial').val()
                 },

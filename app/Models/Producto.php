@@ -13,7 +13,9 @@ class Producto extends Model
                         'descripcion', 
                         'clave_sat',
                         'unidad_medida',
-                        'precio_unitario'
+                        'precio_comrpa',
+                        'precio_venta',
+                        'precio_minimo',
                         ];
     public $incrementing = true;
 }

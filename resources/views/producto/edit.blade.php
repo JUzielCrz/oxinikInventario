@@ -11,19 +11,34 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col">
+        <div class="form-group col-6">
             <label for="">U.M.</label>
             <select name="unidad_medida_edit" id="unidad_medida_edit" class="form-control form-control-sm" required>
                 <option value="">Selecciona</option>
+                <option value="m3">m3</option>
                 <option value="pza">pza</option>
                 <option value="kg">kg</option>
+                <option value="litros">litros</option>
                 <option value="kit">kit</option>
                 <option value="unidad">unidad</option>
             </select>
         </div>
+    </div>
+
+    <div class="form-row">
         <div class="form-group col">
-            <label for="">P.U.</label>
-            <input type="number" name="precio_unitario_edit" id="precio_unitario_edit" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0" required>
+            <label for="">Precio Compra</label>
+            <input type="number" name="precio_compra_edit" id="precio_compra_edit" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0" required>
+        </div>
+        <div class="form-group col">
+            <label for="">Precio Venta</label>
+            <input type="number" name="precio_venta_edit" id="precio_venta_edit" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-6">
+            <label for="">Precio Minimo</label>
+            <input type="number" name="precio_minimo_edit" id="precio_minimo_edit" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0" required>
         </div>
     </div>
 

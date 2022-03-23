@@ -8,10 +8,11 @@ class Venta extends Model
 {
     protected $table = 'venta';
     public $timestamps =  true;
-    protected $fillable = ['folio_factura',
+    protected $fillable = ['folio',
                         'fecha',
                         'cliente_id',
-                        'total_general'
+                        'total_general',
+                        'observaciones'
                         ];
     public $incrementing = true;
 }

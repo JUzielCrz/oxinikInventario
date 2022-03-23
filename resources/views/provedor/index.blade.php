@@ -4,13 +4,13 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header bg-verde-oscuro">
+            <div class="card-header ">
                 <div class="row ml-4">
                     <div class="col-md-6">
                         <h4>Provedores</h4>
                     </div>
                     <div class="col-md-5 text-right">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-insertar">
+                        <button type="button" class="btn btn-amarillo" data-toggle="modal" data-target="#modal-insertar">
                             <span class="fas fa-plus"></span>
                             Agregar
                         </button>

@@ -8,6 +8,7 @@ use App\Models\CompraProducto;
 use App\Models\Producto;
 use App\Models\Provedor;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CompraController extends Controller
 {
@@ -16,8 +17,7 @@ class CompraController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
+    public function index(){
         return view('compra.index');
     }
 
@@ -55,21 +55,24 @@ class CompraController extends Controller
         }
     }
 
-
     public function save(Request $request)
     { 
-
         $request->validate([
             'provedor' => ['required'],
-            
+            'folio' => ['required'],
+            'tipo_folio' => ['required'],
+            'total_general' => ['required'],
+            'fecha' => ['required'],
         ]);
         if(count($request->arrProducto) > 0){
 
             $cadenaProvedor=explode('- ', $request->provedor);
             $compra = new Compra();
             $compra->provedor_id = intval($cadenaProvedor[0]);
-            $compra->folio_factura = $request->folio_factura;
+            $compra->tipo_folio = $request->tipo_folio;
+            $compra->folio = $request->folio;
             $compra->total_general = $request->total_general;
+            $compra->observaciones = $request->observaciones;
             $compra->fecha = $request->fecha;
             
             if($compra->save()){
@@ -99,4 +102,33 @@ class CompraController extends Controller
             
         }
     }
+
+
+    public function index_nota(){
+        return view('compra.notas.lista');
+    }
+
+    public function nota_data(){
+        $notas=Compra::
+        join('provedor','provedor.id','compra.provedor_id')
+        ->select('nombre as provedor', 'folio', 'fecha','total_general', 'compra.id as idCompra');
+        return DataTables::of(
+            $notas
+        )
+        ->addColumn( 'btnShow', '<a class="btn btn-sm btn-verde" href="{{route(\'compras.nota.show\', $idCompra)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>')
+        // ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
+        // ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-xs" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
+        ->rawColumns(['btnShow'])
+        ->toJson();
+    }
+    public function nota_show($idCompra){
+        $nota=Compra::
+        join('provedor', 'provedor.id','=', 'compra.provedor_id')
+        ->select('provedor.nombre as provedor','compra.*')
+        ->where('compra.id',$idCompra)->first();
+        $productos=CompraProducto::where('compra_id',$idCompra)->get();
+        $data=["nota"=>$nota, "productos"=>$productos];
+        return view('compra.notas.show', $data);
+    }
+
 }

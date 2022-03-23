@@ -19,9 +19,11 @@ class CreateVentaTable extends Migration
             $table->foreign('cliente_id')->references('id')
                 ->on('cliente')
                 ->onDelete('restrict');
-            $table->string('folio_factura');
+            $table->string('folio');
+            $table->string('tipo_folio');
             $table->date('fecha');
             $table->float('total_general');
+            $table->string('observaciones')->nullable();
             $table->timestamps();
         });
     }

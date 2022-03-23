@@ -19,7 +19,9 @@ class CreateProductoTable extends Migration
             $table->string('unidad_medida');
             $table->string('descripcion')->nullable();
             $table->string('clave_sat')->nullable();
-            $table->float('precio_unitario')->nullable();
+            $table->float('precio_compra');
+            $table->float('precio_venta');
+            $table->float('precio_minimo');
             $table->timestamps();
         });
     }

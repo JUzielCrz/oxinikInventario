@@ -9,6 +9,12 @@ use Yajra\DataTables\DataTables;
 
 class AlmacenController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
         return view('almacen.index');
@@ -17,13 +23,13 @@ class AlmacenController extends Controller
     public function data(){
         $almacen=Producto::
         leftjoin('almacen','producto.id','=','almacen.producto_id')
-        ->select('almacen.*','almacen.id as idAlmacen','producto.nombre','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto');
+        ->select('almacen.*','almacen.id as idAlmacen','producto.nombre','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto', 'producto.precio_compra', 'producto.precio_venta', 'producto.precio_minimo');
         return DataTables::of(
             $almacen
         )                                                               
         // ->addColumn( 'btn-show', '<button class="btn btn-outline-secondary btn-class-show btn-xs" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
-        ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
-        ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-xs" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
+        ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-sm" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
+        ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-sm" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
         ->rawColumns(['btn-stock','btn-edit'])
         ->toJson();
     }

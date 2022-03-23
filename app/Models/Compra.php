@@ -9,10 +9,12 @@ class Compra extends Model
     protected $table = 'compra';
     public $timestamps =  true;
     protected $fillable = ['id',
-                        'folio_factura',
+                        'tipo_folio',
+                        'folio',
                         'fecha', 
                         'provedor_id',
-                        'total_general'
+                        'total_general',
+                        'observaciones',
                         ];
     public $incrementing = true;
 }

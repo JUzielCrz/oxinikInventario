@@ -26,7 +26,7 @@ class CreateVentaProductosTable extends Migration
             $table->integer('cantidad');
             $table->float('subtotal');
             $table->float('iva');
-            $table->float('total');
+            $table->float('total')->nullable();
             $table->enum('facturado',['SI', 'NO']);
             $table->timestamps();
         });

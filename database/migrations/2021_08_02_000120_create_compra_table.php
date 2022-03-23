@@ -19,9 +19,11 @@ class CreateCompraTable extends Migration
             $table->foreign('provedor_id')->references('id')
                 ->on('provedor')
                 ->onDelete('restrict');
-            $table->string('folio_factura');
+            $table->string('folio');
+            $table->string('tipo_folio');
             $table->date('fecha');
             $table->float('total_general');
+            $table->string('observaciones')->nullable();
             $table->timestamps();
         });
     }

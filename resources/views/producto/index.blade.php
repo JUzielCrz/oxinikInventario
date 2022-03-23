@@ -4,13 +4,13 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header bg-verde-oscuro">
+            <div class="card-header ">
                 <div class="row ml-4">
                     <div class="col-md-6">
                         <h4>Productos</h4>
                     </div>
                     <div class="col-md-5 text-right">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-insertar">
+                        <button type="button" class="btn btn-amarillo" data-toggle="modal" data-target="#modal-insertar">
                             <span class="fas fa-plus"></span>
                             Agregar
                         </button>
@@ -19,14 +19,16 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="table-data-producto" class="table table-sm table-hover table-bordered">
-                        <thead style="font-size:14px">
+                    <table id="table-data-producto" class="table table-sm table-hover table-bordered" style="font-size:13px">
+                        <thead style="font-size:13px">
                             <tr>
                                 <th>NOMBRE</th>
                                 <th>DESCRIPCIÓN</th>
                                 <th>CLAVE SAT</th>
                                 <th>UNIDAD MEDIDA</th>
-                                <th>PRECIO UNITARIO</th>
+                                <th>P. COMPRA</th>
+                                <th>P. VENTA</th>
+                                <th>P. MINIMO</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -35,7 +37,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
 

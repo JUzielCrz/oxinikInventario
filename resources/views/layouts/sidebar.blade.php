@@ -10,8 +10,8 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <h3>OXINIK</h3>
-                <strong>OX</strong>
+                <h3 class="text-white">OXINIK</h3>
+                <strong class="text-white">OX</strong>
             </div>
 
             <ul class="list-unstyled components">
@@ -32,7 +32,7 @@
                 <li id="nav-ico-producto" ><a href="{{ url('/producto/index') }}"><i class="fas fa-shopping-basket"></i>Productos</a></li>
                 <li id="nav-ico-provedor" ><a href="{{ url('/provedor/index') }}"><i class="fas fa-user-tag"></i></i>Provedores</a></li>
                 <li id="nav-ico-cliente" ><a href="{{ url('/cliente/index') }}"><i class="fas fa-users"></i>Clientes</a></li>
-
+                <li id="nav-ico-usuario" ><a href="{{ url('/user/index') }}"><i class="fas fa-users-cog"></i>Usuarios</a></li>
             </ul>
 
             <ul class="list-unstyled CTAs">
@@ -48,23 +48,32 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 3rem">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <button type="button" id="sidebarCollapse" class="btn ">
                         <i class="fas fa-align-left"></i>   
                     </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="btn d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
+                    <button class="btn btn-sm btn-amarillo ml-2" onclick="return window.history.back();"><span class="fas fa-arrow-circle-left"></span></button>
+                    
+                    
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item dropdown dropleft">
-                                <button class="btn btn-outline-secondary dropdown-toggle nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                    Nombre Usuario
+                            
+                            <div class="mr-5">
+                                @yield('menu-navbar')
+                            </div>
+                            
+
+
+                            <li class="nav-item dropdown mr-5">
+                                <button class="btn btn-logout  nav-link m-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  >
+                                    <i class="far fa-user-circle fa-2x"></i>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#">Mi perfil</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" 
@@ -76,6 +85,7 @@
                                 </div>
                             </li>
 
+                            
 
                             {{-- <li class="nav-item active">
                                 <a class="nav-link" href="#">Page</a>

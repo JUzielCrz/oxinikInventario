@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-shopping-cart fa-4x"></i>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/compra/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">
                                 Ir a vista <i class="fas fa-angle-double-right"></i>
@@ -31,7 +31,7 @@
         </div>
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-file-invoice-dollar fa-4x"></i>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/venta/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">
                                 Ir a vista <i class="fas fa-angle-double-right "></i>
@@ -56,7 +56,7 @@
         </div>
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-warehouse fa-4x"></i>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/almacen/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">
                                 Ir a vista <i class="fas fa-angle-double-right"></i>
@@ -84,7 +84,7 @@
     <div class="row mt-5">
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-shopping-basket fa-4x"></i>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/producto/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">    
                                 Ir a vista <i class="fas fa-angle-double-right"></i>
@@ -109,7 +109,7 @@
         </div>
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-user-tag fa-4x"></i></i>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/provedor/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">
                                 Ir a vista <i class="fas fa-angle-double-right"></i>
@@ -134,7 +134,7 @@
         </div>
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <div class="card-body bg-info border-dark text-white">
+                <div class="card-body bg-verde-oscuro border-dark text-white">
                     <div class="row">
                         <div class="col m-0 align-self-center text-center">
                             <i class="fas fa-users fa-4x"></i>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <a href="{{ url('/cliente/index') }}">
-                    <div class="card-footer bg-verde-oscuro">
+                    <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">
                                 Ir a vista <i class="fas fa-angle-double-right"></i>
