@@ -92,6 +92,7 @@
                             <th>SUBTOTAL</th>
                             <th>IVA</th>
                             <th>TOTAL</th>
+                            <th>FACTURADO</th>
                             <th></th>
                         </tr>
                     </thead>

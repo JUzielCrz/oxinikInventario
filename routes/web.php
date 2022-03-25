@@ -65,11 +65,20 @@ Route::get('/venta/nota/data', 'VentaController@nota_data');
 Route::get('/venta/nota/show/{id}', 'VentaController@nota_show')->name('venta.nota.show');
 
 /* Almacen */
-Route::get('/almacen/index', 'AlmacenController@index');
-Route::get('/almacen/data', 'AlmacenController@data');
-Route::get('/almacen/show/{id}', 'AlmacenController@show');
-Route::post('/almacen/update', 'AlmacenController@update');
-Route::post('/almacen/update_stock', 'AlmacenController@update_stock');
+Route::get('/almacen/general/index', 'AlmacenGeneralController@index');
+Route::get('/almacen/general/data', 'AlmacenGeneralController@data');
+
+Route::get('/almacen/fiscal/index', 'AlmacenFiscalController@index');
+Route::get('/almacen/fiscal/data', 'AlmacenFiscalController@data');
+Route::get('/almacen/fiscal/show/{id}', 'AlmacenFiscalController@show');
+Route::post('/almacen/fiscal/update', 'AlmacenFiscalController@update');
+Route::post('/almacen/fiscal/update_stock', 'AlmacenFiscalController@update_stock');
+
+Route::get('/almacen/nofiscal/index', 'AlmacenNoFiscalController@index');
+Route::get('/almacen/nofiscal/data', 'AlmacenNoFiscalController@data');
+Route::get('/almacen/nofiscal/show/{id}', 'AlmacenNoFiscalController@show');
+Route::post('/almacen/nofiscal/update', 'AlmacenNoFiscalController@update');
+Route::post('/almacen/nofiscal/update_stock', 'AlmacenNoFiscalController@update_stock');
 
 
 /* Usuarios */

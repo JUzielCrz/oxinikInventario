@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Almacen;
+use App\Models\AlmacenFiscal;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -54,6 +55,11 @@ class ProductoController extends Controller
         $almacen->producto_id = $producto->id;
         $almacen->inicial = $request->stock_inicial;
         $almacen->stock = $request->stock_inicial;
+        $almacen->save();
+
+        $almacen=new AlmacenFiscal();
+        $almacen->producto_id = $producto->id;
+        $almacen->stock = 0;
         $almacen->save();
 
         return response()->json(['mensaje'=>'Registrado Correctamente']);

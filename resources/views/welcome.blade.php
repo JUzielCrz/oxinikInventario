@@ -45,7 +45,7 @@
                 Login
             </a>
         </nav>
-        <div class="container ">
+        <div class="container">
             <div class="card mt-4">
                 <div class="card-header ">
                     <div class="row ml-4">
@@ -63,8 +63,8 @@
                                     <th>U.M.</th>
                                     <th>CLAVE SAT</th>
                                     <th>STOCK</th>
-                                    <th>P.COMPRA</th>
                                     <th>P.VENTA</th>
+                                    <th>P.MINIMO</th>
                                 </tr>
                             </thead>
                         </table>

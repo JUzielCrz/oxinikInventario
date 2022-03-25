@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Almacen;
+use App\Models\AlmacenFiscal;
 use App\Models\Compra;
 use App\Models\CompraProducto;
 use App\Models\Producto;
@@ -64,8 +65,11 @@ class CompraController extends Controller
             'total_general' => ['required'],
             'fecha' => ['required'],
         ]);
-        if(count($request->arrProducto) > 0){
+        
 
+        if(count($request->arrProducto) > 0){
+            
+            
             $cadenaProvedor=explode('- ', $request->provedor);
             $compra = new Compra();
             $compra->provedor_id = intval($cadenaProvedor[0]);
@@ -88,18 +92,32 @@ class CompraController extends Controller
                     $productos->facturado = $request->arrFacturado[$indice];
                     $productos->save();
 
-                    $actualizarstock = Almacen::where('producto_id',$productos->producto_id)->first();
-                    dump($actualizarstock);
-                    $sumstock=$actualizarstock->stock+$productos->cantidad;
-                    $sumentradas=$actualizarstock->entradas+$productos->cantidad;
-                    $actualizarstock->stock = $sumstock;
-                    $actualizarstock->entradas = $sumentradas;
-                    $actualizarstock->save();
+                    if($request->arrFacturado[$indice] == 'SI'){
+                        $stock_almacen = AlmacenFiscal::where('producto_id',$productos->producto_id)->first();
+                        if($stock_almacen){
+                            $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
+                            $sumentradas=$stock_almacen->entradas+$productos->cantidad;
+                            $stock_almacen->stock = $suma;
+                            $stock_almacen->entradas = $sumentradas;
+                            $stock_almacen->save();
+                        }else{
+                            $new_registro= new AlmacenFiscal();
+                            $new_registro->producto_id = $productos->producto_id;
+                            $new_registro->stock =$request->arrCantidad[$indice];
+                            $new_registro->entradas = $request->arrCantidad[$indice];
+                            $new_registro->save();
+                        }
+                    }else{
+                        $stock_almacen = Almacen::where('producto_id',$productos->producto_id)->first();
+                        $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
+                        $sumentradas=$stock_almacen->entradas+$productos->cantidad;
+                        $stock_almacen->stock = $suma;
+                        $stock_almacen->entradas = $sumentradas;
+                        $stock_almacen->save();
+                    }
                 }
                 return response()->json(['mensaje'=>'success']);
             }
-
-            
         }
     }
 

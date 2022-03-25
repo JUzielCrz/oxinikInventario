@@ -26,14 +26,20 @@ $(document).ready(function () {
         },
         processing: true,
         serverSider: true,
-        ajax: '/inicio/data',
+        ajax: '/almacen/fiscal/data',
         columns:[
             {data: 'nombre'},
             {data: 'unidad_medida'},
             {data: 'clave_sat'},
-            {data: 'sumStock'},
+            {data: 'entradas'},
+            {data: 'salidas'},
+            {data: 'stock'},
+            {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},
+            {data: 'observaciones'},
+            {data: 'btn-edit' },
+            {data: 'btn-stock'},
         ]
     });
 
@@ -45,7 +51,7 @@ $(document).ready(function () {
 
 
     function llenar_campos_edit() {
-        $.get('/almacen/show/' + $(this).data('id') , function(msg) {
+        $.get('/almacen/fiscal/show/' + $(this).data('id') , function(msg) {
             $.each(msg.data, function (key, value) {
                 var variable = "#" + key;
                 $(variable).val(value);
@@ -77,7 +83,7 @@ $(document).ready(function () {
     }
 
     function llenar_campo_stock(){
-        $.get('/almacen/show/' + $(this).data('id') , function(msg) { 
+        $.get('/almacen/fiscal/show/' + $(this).data('id') , function(msg) { 
             $('#idAlmacen_stock').val(msg.data.idAlmacen);
         })
         
@@ -93,7 +99,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "/almacen/update_stock",
+            url: "/almacen/fiscal/update_stock",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'idAlmacen': $("#idAlmacen_stock").val(),

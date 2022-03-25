@@ -28,7 +28,7 @@
                 </li> --}}
                 <li id="nav-ico-compra" ><a href="{{ url('/compra/index') }}"><i class="fas fa-shopping-cart"></i>Compras</a></li>
                 <li id="nav-ico-venta" ><a href="{{ url('/venta/index') }}"><i class="fas fa-file-invoice-dollar"></i>Venta</a></li>
-                <li id="nav-ico-almacen" ><a href="{{ url('/almacen/index') }}"><i class="fas fa-warehouse"></i>Almacen</a></li>
+                <li id="nav-ico-almacen" ><a href="{{ url('/almacen/general/index') }}"><i class="fas fa-warehouse"></i>Almacen</a></li>
                 <li id="nav-ico-producto" ><a href="{{ url('/producto/index') }}"><i class="fas fa-shopping-basket"></i>Productos</a></li>
                 <li id="nav-ico-provedor" ><a href="{{ url('/provedor/index') }}"><i class="fas fa-user-tag"></i></i>Provedores</a></li>
                 <li id="nav-ico-cliente" ><a href="{{ url('/cliente/index') }}"><i class="fas fa-users"></i>Clientes</a></li>
@@ -48,66 +48,44 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 3rem">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-sm pt-1 pb-1 mb-3">
+                {{-- BOTON PARA MENU LATERAL (SIDEBAR) --}}
+                <button type="button" id="sidebarCollapse" class="btn btn-amarillo " >
+                    <i class="fas fa-align-left"></i>   
+                </button>
+                <button class="btn btn-sm btn-amarillo ml-2" onclick="return window.history.back();"><span class="fas fa-arrow-circle-left"></span></button>
 
-                    <button type="button" id="sidebarCollapse" class="btn ">
-                        <i class="fas fa-align-left"></i>   
-                    </button>
-                    <button class="btn d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-                    <button class="btn btn-sm btn-amarillo ml-2" onclick="return window.history.back();"><span class="fas fa-arrow-circle-left"></span></button>
-                    
-                    
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            
-                            <div class="mr-5">
-                                @yield('menu-navbar')
-                            </div>
-                            
+                {{-- MENU del NVAR--}}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>     
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav" id="menu-navbar">
+                        @yield('menu-navbar')
+                    </ul>
+                </div>
 
-
-                            <li class="nav-item dropdown mr-5">
-                                <button class="btn btn-logout  nav-link m-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  >
-                                    <i class="far fa-user-circle fa-2x"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Mi perfil</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" 
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form1').submit();">Cerar Sesion</a>
-                                    <form id="logout-form1" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-
-                            
-
-                            {{-- <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li> --}}
-                        </ul>
+                {{-- CERRAR SESION --}}
+                <span class=" mr-2"> <i class="fas fa-user"></i> {{auth()->user()->name}} </span>
+                <div class="btn-group">
+                    <a type="button" class="btn btn-amarillo" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="font-size: 13px">
+                        <a  href="{{ route('logout') }}" class="dropdown-item" type="button" onclick="event.preventDefault(); document.getElementById('logout-form1').submit();" class="article">
+                            <i class="fas fa-sign-out-alt"></i> Cerar Sesión
+                        </a>
+                        <form id="logout-form1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
+                
             </nav>
-
 
             @yield('content-sidebar')
 
-            </div>
+        </div>
     </div>
 
 @endsection

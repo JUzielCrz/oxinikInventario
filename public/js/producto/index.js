@@ -150,7 +150,9 @@ $(document).ready(function () {
         $("#nombre").val("");
         $("#clave_sat").val("");
         $("#unidad_medida").val("");
-        $("#precio_unitario").val("");
+        $("#precio_venta").val("");
+        $("#precio_compra").val("");
+        $("#precio_minimo").val("");
         $("#descripcion").val("");
         $("#stock_inicial").val("");
     }   

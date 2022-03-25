@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ url('/almacen/index') }}">
+                <a href="{{ url('/almacen/general/index') }}">
                     <div class="card-footer ">
                         <div class="row">
                             <div class="col text-right">

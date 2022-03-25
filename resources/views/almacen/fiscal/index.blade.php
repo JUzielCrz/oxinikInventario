@@ -2,15 +2,11 @@
 
 @section('content-sidebar')
 
-    <div class="container">
+<ul class="nav nav-tabs justify-content-center mt-2">
+    @include('almacen.submenu')
+</ul>
+    <div class="container-fluid">
         <div class="card">
-            <div class="card-header ">
-                <div class="row ml-4">
-                    <div class="col">
-                        <h4>ALMACÉN</h4>
-                    </div>
-                </div>
-            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="table-data-almacen" class="table table-sm table-hover table-bordered" style="font-size:14px">
@@ -19,7 +15,6 @@
                                 <th>PRODUCTO</th>
                                 <th>U.M.</th>
                                 <th>CLAVE SAT</th>
-                                <th>INICIAL</th>
                                 <th>ENTRADAS</th>
                                 <th>SALIDAS</th>
                                 <th>STOCK</th>
@@ -86,6 +81,12 @@
 
 @include('layouts.scripts')
 
+<script>
+    $(document).ready(function () {
+        $("#id-menu-fiscal").addClass('active');
+    });
+</script>
+
 <!--Scripts-->
-<script src="{{ asset('js/almacen/index.js') }}"></script>
+<script src="{{ asset('js/almacen/fiscal/index.js') }}"></script>
 

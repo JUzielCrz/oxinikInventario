@@ -57,11 +57,13 @@ $(document).ready(function () {
         $('#cantidadError').empty();
         $('#subtotalError').empty();
         $('#ivaError').empty();
+        $('#facturadoError').empty();
 
         $('#producto').removeClass('is-invalid');
         $('#cantidad').removeClass('is-invalid');
         $('#subtotal').removeClass('is-invalid');
         $('#iva').removeClass('is-invalid');
+        $('#facturado').removeClass('is-invalid');
 
         if($("#producto").val() == ''){
             $("#producto").addClass('is-invalid');
@@ -81,6 +83,11 @@ $(document).ready(function () {
         if($("#iva").val() < 0){
             $("#iva").addClass('is-invalid');
             $("#ivaError").text('Necesario');
+            return false;
+        }
+        if($("#facturado").val() == ''){
+            $("#facturado").addClass('is-invalid');
+            $("#facturadoError").text('Necesario');
             return false;
         }
         
@@ -104,6 +111,7 @@ $(document).ready(function () {
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
                 "<td>"+$("#iva").val()+"</td><input type='hidden' name='arrIva[]' value='"+$('#iva').val() +"'></input>"+
                 "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
+                "<td>"+$("#facturado").val()+"</td><input type='hidden' name='arrFacturado[]' value='"+$('#facturado').val() +"'></input>"+
                 "<td>"+ "<button type='button' class='btn btn-naranja' id='btn-eliminar-fila'><span class='fas fa-window-close'></span></button>" +"</td>"+
             "</tr>"
         );
@@ -218,6 +226,7 @@ $(document).ready(function () {
         $("#subtotal").val('')
         $("#iva").val('')
         $("#total").val('')
+        $("#facturado").val('')
     }
     function limpiar_campos_venta(){
         $("#cliente").val('')

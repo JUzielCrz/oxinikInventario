@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Almacen;
+use App\Models\AlmacenFiscal;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Venta;
@@ -57,19 +58,22 @@ class VentaController extends Controller
 
     public function save(Request $request)
     { 
-
         if(count($request->arrProducto) > 0){
             $cadenaCliente=explode('- ', $request->cliente);
-
             foreach( $request->arrProducto AS $valid => $g){
                 if($request->arrCantidad[$valid] <1){
                     return response()->json(['mensaje'=>'No se admiten valores menor a 1']);
                 }
                 
                 $cadenaProducto=explode('- ', $request->arrProducto[$valid]);
-                $actualizarstock = Almacen::where('producto_id',intval($cadenaProducto[0]))->first();
-                $sumstock=$actualizarstock->stock-$request->arrCantidad[$valid];
-                if($sumstock<0){
+                if($request->arrFacturado[$valid] == 'SI'){
+                    $get_producto = AlmacenFiscal::where('producto_id',intval($cadenaProducto[0]))->first();
+                }
+                if($request->arrFacturado[$valid] == 'NO'){
+                    $get_producto = Almacen::where('producto_id',intval($cadenaProducto[0]))->first();
+                }
+                $resta_stock=$get_producto->stock-$request->arrCantidad[$valid];
+                if($resta_stock<0){
                     return response()->json(['mensaje'=>'No hay stock suficiente']);
                 };
             }
@@ -96,14 +100,21 @@ class VentaController extends Controller
                     $productos->subtotal = $request->arrSubTotal[$indice];
                     $productos->iva = $request->arrIva[$indice];
                     $productos->total = $request->arrTotal[$indice];
+                    $productos->facturado = $request->arrFacturado[$indice];
                     $productos->save();
                     
-                    $actualizarstock = Almacen::where('producto_id',$productos->producto_id)->first();
-                    $sumstock=$actualizarstock->stock-$productos->cantidad;
-                    $sumsalidas=$actualizarstock->salidas+$productos->cantidad;
-                    $actualizarstock->stock = $sumstock;
-                    $actualizarstock->salidas = $sumsalidas;
-                    $actualizarstock->save();
+                    if($request->arrFacturado[$indice] == 'SI'){
+                        $search_producto = AlmacenFiscal::where('producto_id',$productos->producto_id)->first();
+                    }
+                    if($request->arrFacturado[$indice] == 'NO'){
+                        $search_producto = Almacen::where('producto_id',$productos->producto_id)->first();
+                    }
+                    
+                    $resta= $search_producto->stock - $productos->cantidad;
+                    $sumsalidas=$search_producto->salidas+$productos->cantidad;
+                    $search_producto->stock = $resta;
+                    $search_producto->salidas = $sumsalidas;
+                    $search_producto->save();
                 }
                 
                 return response()->json(['mensaje'=>'success']);
