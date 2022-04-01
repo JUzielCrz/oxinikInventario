@@ -29,6 +29,7 @@ $(document).ready(function () {
         ajax: '/almacen/fiscal/data',
         columns:[
             {data: 'nombre'},
+            {data: 'capacidad'},
             {data: 'unidad_medida'},
             {data: 'clave_sat'},
             {data: 'entradas'},

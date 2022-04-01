@@ -13,6 +13,7 @@
                         <thead style="font-size:12px">
                             <tr>
                                 <th>PRODUCTO</th>
+                                <th>CAPACIDAD</th>
                                 <th>U.M.</th>
                                 <th>CLAVE SAT</th>
                                 <th>ENTRADAS</th>

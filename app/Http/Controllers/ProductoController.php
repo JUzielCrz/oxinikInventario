@@ -37,6 +37,7 @@ class ProductoController extends Controller
     public function create(Request $request){
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
+            'capacidad' => ['required'],
             'unidad_medida' => ['required'],
             'stock_inicial' => ['required'],
         ]);
@@ -45,6 +46,7 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
         $producto->unidad_medida = $request->unidad_medida;
+        $producto->capacidad = $request->capacidad;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
         $producto->precio_minimo = $request->precio_minimo;
@@ -80,6 +82,7 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
+        $producto->capacidad = $request->capacidad;
         $producto->unidad_medida = $request->unidad_medida;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;

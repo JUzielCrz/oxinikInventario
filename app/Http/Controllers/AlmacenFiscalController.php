@@ -21,7 +21,7 @@ class AlmacenFiscalController extends Controller
     public function data(){
         $almacen=Producto::
         join('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
-        ->select('almacen_fiscal.*','almacen_fiscal.id as idAlmacen','producto.nombre','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto', 'producto.precio_compra', 'producto.precio_venta', 'producto.precio_minimo');
+        ->select('almacen_fiscal.*','almacen_fiscal.id as idAlmacen','producto.nombre','producto.capacidad','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto', 'producto.precio_compra', 'producto.precio_venta', 'producto.precio_minimo');
         return DataTables::of(
             $almacen
         )                                                               
@@ -35,7 +35,7 @@ class AlmacenFiscalController extends Controller
     public function show($id){
         $data=Producto::
         leftjoin('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
-        ->select('almacen_fiscal.*', 'almacen_fiscal.id as idAlmacen','producto.nombre','producto.clave_sat', 'unidad_medida', 'producto.id as idProducto')
+        ->select('almacen_fiscal.*', 'almacen_fiscal.id as idAlmacen','producto.nombre','producto.capacidad','producto.clave_sat', 'unidad_medida', 'producto.id as idProducto')
         ->where('producto.id',$id)
         ->first();
         return response()->json(['data'=>$data]);

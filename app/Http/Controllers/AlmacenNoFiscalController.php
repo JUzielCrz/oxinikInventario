@@ -22,7 +22,7 @@ class AlmacenNoFiscalController extends Controller
     public function data(){
         $almacen=Producto::
         leftjoin('almacen','producto.id','=','almacen.producto_id')
-        ->select('almacen.*','almacen.id as idAlmacen','producto.nombre','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto', 'producto.precio_compra', 'producto.precio_venta', 'producto.precio_minimo');
+        ->select('almacen.*','almacen.id as idAlmacen','producto.nombre','producto.capacidad','producto.clave_sat', 'producto.unidad_medida','producto.id as idProducto', 'producto.precio_compra', 'producto.precio_venta', 'producto.precio_minimo');
         return DataTables::of(
             $almacen
         )                                                               
@@ -36,7 +36,7 @@ class AlmacenNoFiscalController extends Controller
     public function show($id){
         $data=Producto::
         leftjoin('almacen','producto.id','=','almacen.producto_id')
-        ->select('almacen.*', 'almacen.id as idAlmacen','producto.nombre','producto.clave_sat', 'unidad_medida', 'producto.id as idProducto')
+        ->select('almacen.*', 'almacen.id as idAlmacen','producto.nombre','producto.capacidad','producto.clave_sat', 'unidad_medida', 'producto.id as idProducto')
         ->where('producto.id',$id)
         ->first();
         return response()->json(['data'=>$data]);
