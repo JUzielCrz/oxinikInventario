@@ -29,7 +29,6 @@ $(document).ready(function () {
         ajax: '/almacen/nofiscal/data',
         columns:[
             {data: 'nombre'},
-            {data: 'capacidad'},
             {data: 'unidad_medida'},
             {data: 'clave_sat'},
             {data: 'inicial'},

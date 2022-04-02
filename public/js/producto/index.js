@@ -31,7 +31,6 @@ $(document).ready(function () {
             {data: 'nombre'},
             {data: 'descripcion'},
             {data: 'clave_sat'},
-            {data: 'capacidad'},
             {data: 'unidad_medida'},
             {data: 'precio_compra'},
             {data: 'precio_venta'},
@@ -105,7 +104,6 @@ $(document).ready(function () {
                 'nombre': $('#nombre_edit').val(),
                 'clave_sat': $('#clave_sat_edit').val(),
                 'unidad_medida': $('#unidad_medida_edit').val(),
-                'capacidad': $('#capacidad_edit').val(),
                 'precio_compra': $('#precio_compra_edit').val(),
                 'precio_venta': $('#precio_venta_edit').val(),
                 'precio_minimo': $('#precio_minimo_edit').val(),
@@ -152,7 +150,6 @@ $(document).ready(function () {
         $("#nombre").val("");
         $("#clave_sat").val("");
         $("#unidad_medida").val("");
-        $("#capacidad").val("");
         $("#precio_venta").val("");
         $("#precio_compra").val("");
         $("#precio_minimo").val("");
@@ -198,7 +195,6 @@ $(document).ready(function () {
     function remove_class_invalid(identificador) {
         $("#nombre"+identificador).removeClass("is-invalid");
         $("#clave_sat"+identificador).removeClass("is-invalid");
-        $("#capacidad"+identificador).removeClass("is-invalid");
         $("#unidad_medida"+identificador).removeClass("is-invalid");
         $("#precio_unitario"+identificador).removeClass("is-invalid");
         $("#descripcion"+identificador).removeClass("is-invalid");

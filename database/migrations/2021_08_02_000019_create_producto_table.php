@@ -17,7 +17,6 @@ class CreateProductoTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('unidad_medida');
-            $table->string('capacidad');
             $table->string('descripcion')->nullable();
             $table->string('clave_sat')->nullable();
             $table->float('precio_compra');

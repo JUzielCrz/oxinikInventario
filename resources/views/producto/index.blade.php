@@ -25,7 +25,6 @@
                                 <th>NOMBRE</th>
                                 <th>DESCRIPCIÓN</th>
                                 <th>CLAVE SAT</th>
-                                <th>CAPACIDAD</th>
                                 <th>UNIDAD MEDIDA</th>
                                 <th>P. COMPRA</th>
                                 <th>P. VENTA</th>

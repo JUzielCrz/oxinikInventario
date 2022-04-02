@@ -12,10 +12,6 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="">Capacidad</label>
-            <input type="number" name="capacidad" id="capacidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#" required>
-        </div>
         <div class="form-group col">
             <label for="">U.M.</label>
             <select name="unidad_medida" id="unidad_medida" class="form-control form-control-sm" required>
@@ -28,7 +24,10 @@
                 <option value="unidad">unidad</option>
             </select>
         </div>
-        
+        <div class="form-group col-md-6">
+            <label for="">Stock Inicial</label>
+            <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-entero-positivo" placeholder="#" required>
+        </div>
     </div>
 
     <div class="form-row">
@@ -45,10 +44,6 @@
         <div class="form-group col-6">
             <label for="">Precio Minimo</label>
             <input type="number" name="precio_minimo" id="precio_minimo" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0" required>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="">Stock Inicial</label>
-            <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-entero-positivo" placeholder="#" required>
         </div>
     </div>
 

@@ -11,10 +11,6 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="">Capacidad</label>
-            <input type="number" name="capacidad_edit" id="capacidad_edit" class="form-control form-control-sm numero-decimal-positivo" placeholder="#" required>
-        </div>
         <div class="form-group col-6">
             <label for="">U.M.</label>
             <select name="unidad_medida_edit" id="unidad_medida_edit" class="form-control form-control-sm" required>
