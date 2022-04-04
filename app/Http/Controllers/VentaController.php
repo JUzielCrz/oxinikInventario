@@ -86,7 +86,7 @@ class VentaController extends Controller
             $venta->folio = $request->folio;
             $venta->fecha = $request->fecha;
             $venta->total_general = $request->total_general;
-            $venta->observaciones = $request->total_general;
+            $venta->observaciones = $request->observaciones;
             
             if($venta->save()){
 

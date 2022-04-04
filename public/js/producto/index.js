@@ -108,7 +108,7 @@ $(document).ready(function () {
                 'precio_venta': $('#precio_venta_edit').val(),
                 'precio_minimo': $('#precio_minimo_edit').val(),
                 'descripcion': $('#descripcion_edit').val(),
-                'descripcion': $('#stock_inicial').val()
+                // 'stock_inicial_edit': $('#stock_inicial_edit').val()
                 },
         })
             .done(function (msg) {

@@ -19,10 +19,10 @@ class CreateAlmacenTable extends Migration
             $table->foreign('producto_id')->references('id')
                 ->on('producto')
                 ->onDelete('restrict');
-            $table->string('inicial')->default(0);
-            $table->string('entradas')->nullable()->default(0);
-            $table->string('salidas')->nullable()->default(0);
-            $table->string('stock')->default(0);
+            $table->float('inicial')->default(0);
+            $table->float('entradas')->nullable()->default(0);
+            $table->float('salidas')->nullable()->default(0);
+            $table->float('stock')->default(0);
             $table->string('observaciones')->nullable();
             $table->timestamps();
         });

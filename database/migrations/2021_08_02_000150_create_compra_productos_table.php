@@ -23,7 +23,7 @@ class CreateCompraProductosTable extends Migration
             $table->foreign('producto_id')->references('id')
                 ->on('producto')
                 ->onDelete('restrict');
-            $table->integer('cantidad');
+            $table->float('cantidad');
             $table->float('subtotal');
             $table->float('iva');
             $table->float('total');

@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col form-group">
         <label for="">Cantidad</label>
-        <input type="number" id="cantidad_update" class="form-control form-control-sm numero-entero-positivo" placeholder="">
+        <input type="number" id="cantidad_update" class="form-control form-control-sm numero-decimal-positivo" placeholder="">
     </div>
 </div>
 {{-- <div class="row">

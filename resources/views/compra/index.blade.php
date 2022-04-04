@@ -55,7 +55,7 @@
                 </div>
                 <div class="col form-group">
                     <label for="">Cantidad</label>
-                    <input type="number" id="cantidad" class="form-control form-control-sm numero-entero-positivo" placeholder="#">
+                    <input type="number" id="cantidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#">
                 </div>
                 <div class="col form-group">
                     <label for="">Subtotal</label>

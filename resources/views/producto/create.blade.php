@@ -26,7 +26,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="">Stock Inicial</label>
-            <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-entero-positivo" placeholder="#" required>
+            <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-decimal-positivo" placeholder="#" required>
         </div>
     </div>
 
