@@ -55,7 +55,7 @@ $(document).ready(function () {
 
     
     function insertar_producto() {
-        var campo= ['producto','cantidad','subtotal','iva', 'total', 'facturado'];
+        var campo= ['producto','cantidad','subtotal', 'total', 'facturado'];
         var campovacio = [];
 
         $.each(campo, function(index){
@@ -85,6 +85,12 @@ $(document).ready(function () {
             return false;
         }
 
+        var iva_product=0;
+        if($('#iva').val()==""){
+            iva_product=0;
+        } else{
+            iva_product=$('#iva').val();
+        }
         
 
         $('#tbody-lista-productos').append(
@@ -92,7 +98,7 @@ $(document).ready(function () {
                 "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
                 "<td>"+$("#cantidad").val()+"</td><input type='hidden' name='arrCantidad[]' value='"+$('#cantidad').val() +"'></input>"+
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
-                "<td>"+$("#iva").val()+"</td><input type='hidden' name='arrIva[]' value='"+$('#iva').val() +"'></input>"+
+                "<td>"+iva_product+"</td><input type='hidden' name='arrIva[]' value='"+iva_product +"'></input>"+
                 "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
                 "<td>"+$("#facturado").val()+"</td><input type='hidden' name='arrFacturado[]' value='"+$('#facturado').val() +"'></input>"+
                 "<td>"+ "<button type='button' class='btn btn-naranja' id='btn-eliminar-fila'><span class='fas fa-window-close'></span></button>" +"</td>"+

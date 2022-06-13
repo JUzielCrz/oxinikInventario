@@ -25,7 +25,7 @@ class CreateCompraProductosTable extends Migration
                 ->onDelete('restrict');
             $table->float('cantidad');
             $table->float('subtotal');
-            $table->float('iva');
+            $table->float('iva')->default(0);
             $table->float('total');
             $table->enum('facturado',['SI', 'NO']);
             $table->timestamps();

@@ -18,7 +18,7 @@ class CreateAlmacenTable extends Migration
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')
                 ->on('producto')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             $table->float('inicial')->default(0);
             $table->float('entradas')->nullable()->default(0);
             $table->float('salidas')->nullable()->default(0);
