@@ -10,7 +10,7 @@ class CompraProducto extends Model
     public $timestamps =  true;
     protected $fillable = ['id',
                         'compra_id',
-                        'producto',
+                        'producto_id',
                         'cantidad', 
                         'subtotal',
                         'iva',

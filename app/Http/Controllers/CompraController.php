@@ -144,7 +144,12 @@ class CompraController extends Controller
         join('provedor', 'provedor.id','=', 'compra.provedor_id')
         ->select('provedor.nombre as provedor','compra.*')
         ->where('compra.id',$idCompra)->first();
-        $productos=CompraProducto::where('compra_id',$idCompra)->get();
+        
+        $productos=CompraProducto::
+        join('producto', 'producto.id','=','compra_productos.producto_id')
+        ->select('producto.nombre','compra_productos.*')
+        ->where('compra_id',$idCompra)->get();
+        
         $data=["nota"=>$nota, "productos"=>$productos];
         return view('compra.notas.show', $data);
     }
