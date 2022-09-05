@@ -48,13 +48,15 @@
                         </thead>
                         <tbody>
                             @foreach ($productos as $producto)
-                                <td>{{$producto->id}}</td>
-                                <td>{{$producto->producto_id }}</td>
-                                <td>{{$producto->cantidad}}</td>
-                                <td>{{$producto->subtotal}}</td>
-                                <td>{{$producto->iva}}</td>
-                                <td>{{$producto->total}}</td>
-                                <td>{{$producto->facturado}}</td>
+                                <tr>
+                                    <td>{{$producto->id}}</td>
+                                    <td>{{$producto->producto_id }}</td>
+                                    <td>{{$producto->cantidad}}</td>
+                                    <td>{{$producto->subtotal}}</td>
+                                    <td>{{$producto->iva}}</td>
+                                    <td>{{$producto->total}}</td>
+                                    <td>{{$producto->facturado}}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
