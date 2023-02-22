@@ -28,6 +28,7 @@ Route::post('/producto/create', 'ProductoController@create');
 Route::get('/producto/show/{id}', 'ProductoController@show');
 Route::post('/producto/update/{id}', 'ProductoController@update');
 Route::get('/producto/destroy/{id}', 'ProductoController@destroy');
+Route::get('/product/history/{id}', 'ProductoController@history')->name('product.history');
 
 /* provedores */
 Route::get('/provedor/index', 'ProvedorController@index');

@@ -22,6 +22,7 @@ class CreateProductoTable extends Migration
             $table->float('precio_compra');
             $table->float('precio_venta');
             $table->float('precio_minimo');
+            $table->float('user_id')->nullable();
             $table->timestamps();
         });
     }

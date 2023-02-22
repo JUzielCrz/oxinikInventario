@@ -22,6 +22,7 @@
                     <table id="table-data-producto" class="table table-sm table-hover table-bordered" style="font-size:13px">
                         <thead style="font-size:13px">
                             <tr>
+                                <th>ID</th>
                                 <th>NOMBRE</th>
                                 <th>DESCRIPCIÓN</th>
                                 <th>CLAVE SAT</th>
@@ -29,6 +30,7 @@
                                 <th>P. COMPRA</th>
                                 <th>P. VENTA</th>
                                 <th>P. MINIMO</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>

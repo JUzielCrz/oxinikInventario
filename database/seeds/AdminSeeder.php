@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
             'name'      => 'Administrador OXINIK',
             'email'     =>  'sge.oxinik@gmail.com',
             'email_verified_at'     =>  '2020-01-17 13:00:00',
-            'password'  => Hash::make('oxinik#2020'),
+            'password'  => Hash::make('oxinik023'),
         ]);
 
         //Creacion de Rol para Administrador

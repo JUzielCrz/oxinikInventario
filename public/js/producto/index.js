@@ -28,6 +28,7 @@ $(document).ready(function () {
         serverSider: true,
         ajax: '../producto/data',
         columns:[
+            {data: 'id'},
             {data: 'nombre'},
             {data: 'descripcion'},
             {data: 'clave_sat'},
@@ -35,7 +36,7 @@ $(document).ready(function () {
             {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},
-            // {data: 'btn-show'},
+            {data: 'btn-history'},
             {data: 'btn-edit'},
             {data: 'btn-delete'},
         ]

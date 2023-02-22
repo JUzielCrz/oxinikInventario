@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Almacen;
 use App\Models\AlmacenFiscal;
 use App\Models\Producto;
+use App\Models\ProductHistory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -26,11 +27,11 @@ class ProductoController extends Controller
             select('producto.*');
             return DataTables::of(
                 $tanques
-            )                                                               
-            ->addColumn( 'btn-show', '<button class="btn btn-outline-secondary btn-class-show btn-xs" data-id="{{$id}}"><span class="far fa-eye"></span></button>')
-            ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$id}}"><span class="far fa-edit"></span></button>')
-            ->addColumn( 'btn-delete', '<button class="btn btn-outline-secondary btn-class-delete btn-xs" data-id="{{$id}}"><span class="fas fa-trash"></span></button>')
-            ->rawColumns(['btn-show','btn-edit','btn-delete'])
+            )                 
+            ->addColumn( 'btn-history', '<a class="btn btn-sm btn btn-outline-secondary" href="{{route(\'product.history\', $id)}}" data-toggle="tooltip" data-placement="top" title="Historial"><i class="fas fa-history"></i></a>')
+            ->addColumn( 'btn-edit', '<button class="btn btn-sm btn-outline-secondary btn-class-edit btn-xs" data-id="{{$id}}"><span class="far fa-edit"></span></button>')
+            ->addColumn( 'btn-delete', '<button class="btn btn-smbtn-outline-secondary btn-class-delete btn-xs" data-id="{{$id}}"><span class="fas fa-trash"></span></button>')
+            ->rawColumns(['btn-history','btn-edit','btn-delete'])
             ->toJson();
     }
 
@@ -49,6 +50,7 @@ class ProductoController extends Controller
         $producto->precio_venta = $request->precio_venta;
         $producto->precio_minimo = $request->precio_minimo;
         $producto->descripcion = $request->descripcion;
+        $producto->user_id = auth()->id();
         $producto->save();
 
         $almacen=new Almacen();
@@ -99,4 +101,13 @@ class ProductoController extends Controller
         }
     }
 
+    public function history($id)
+    {
+        $products = 
+        ProductHistory::
+        leftjoin('users','users.id','product_histories.user_id')
+        ->select('users.name as user_name', 'product_histories.*')
+        ->where("product_id", $id)->get();
+        return view('producto.history', compact("products"));
+    }
 }
