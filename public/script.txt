@@ -1,0 +1,35 @@
+DROP TRIGGER IF EXISTS product_insert
+DROP TRIGGER IF EXISTS product_update
+DROP TRIGGER IF EXISTS product_delete
+
+DELIMITER //
+CREATE TRIGGER product_insert
+AFTER INSERT ON producto
+FOR EACH ROW
+BEGIN
+  INSERT INTO product_histories (product_id, name, unit_measurement, description,  key_sat, price_buy,price_sale,price_minimum,user_id,event) 
+  value (NEW.id,NEW.nombre,NEW.unidad_medida, NEW.descripcion, NEW.clave_sat, NEW.precio_compra, NEW.precio_venta, NEW.precio_minimo,new.user_id, "CREADO");
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER product_update
+AFTER UPDATE ON producto
+FOR EACH ROW
+BEGIN
+  INSERT INTO product_histories (product_id, name, unit_measurement, description,  key_sat, price_buy,price_sale,price_minimum,user_id,event) 
+  value (NEW.id,NEW.nombre,NEW.unidad_medida, NEW.descripcion, NEW.clave_sat, NEW.precio_compra, NEW.precio_venta, NEW.precio_minimo,new.user_id, "ACTUALIZADO");
+END//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER product_delete
+BEFORE DELETE ON producto
+FOR EACH ROW
+BEGIN
+  INSERT INTO product_histories (product_id, name, unit_measurement, description,  key_sat, price_buy,price_sale,price_minimum,user_id,event) 
+  value (old.id,old.nombre,old.unidad_medida, old.descripcion, old.clave_sat, old.precio_compra, old.precio_venta, old.precio_minimo,old.user_id, "ELIMINADO");
+END//
+DELIMITER ;
+
