@@ -48,27 +48,30 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col form-group">
+                    <label for="">Cantidad</label>
+                    <input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#">
+                </div>
                 <div class="col-md-4 form-group">
                     <label for="">Producto</label>
                     <input type="text" name="producto" id="producto" class="form-control form-control-sm" placeholder="Nombre">
                     <div id="listar-productos"></div>
                 </div>
                 <div class="col form-group">
-                    <label for="">Cantidad</label>
-                    <input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#">
+                    <label for="">Total</label>
+                    <input type="number" name="total" id="total" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
-                <div class="col form-group">
-                    <label for="">Subtotal</label>
-                    <input type="number" name="subtotal" id="subtotal" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
-                </div>
+                
                 <div class="col form-group">
                     <label for="">IVA</label>
                     <input type="number" name="iva" id="iva" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
+
                 <div class="col form-group">
-                    <label for="">Total</label>
-                    <input type="number" name="total" id="total" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
+                    <label for="">Subtotal</label>
+                    <input type="number" name="subtotal" id="subtotal" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
+                
                 <div class="col form-group">
                     <label for="">Facturado</label>
                     <select  id="facturado" class="form-control form-control-sm">

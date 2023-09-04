@@ -9,9 +9,8 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
-            <div class="sidebar-header">
-                <h3 class="text-white">OXINIK</h3>
-                <strong class="text-white">OX</strong>
+            <div>
+                <img id="miLogo" class="img-fluid ">
             </div>
 
             <ul class="list-unstyled components">
@@ -33,6 +32,7 @@
                 <li id="nav-ico-provedor" ><a href="{{ url('/provedor/index') }}"><i class="fas fa-user-tag"></i></i>Provedores</a></li>
                 <li id="nav-ico-cliente" ><a href="{{ url('/cliente/index') }}"><i class="fas fa-users"></i>Clientes</a></li>
                 <li id="nav-ico-usuario" ><a href="{{ url('/user/index') }}"><i class="fas fa-users-cog"></i>Usuarios</a></li>
+                <li id="nav-ico-usuario" ><a href="{{ url('/configuracion/index') }}"><i class="fas fa-cogs"></i>Config</a></li>
             </ul>
 
             <ul class="list-unstyled CTAs">
@@ -54,7 +54,7 @@
                     <i class="fas fa-align-left"></i>   
                 </button>
                 <button class="btn btn-sm btn-amarillo ml-2" onclick="return window.history.back();"><span class="fas fa-arrow-circle-left"></span></button>
-
+                <span class="ml-2" id="name_empresa"></span>
                 {{-- MENU del NVAR--}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -90,4 +90,18 @@
 
 @endsection
 
+<script>
+    $.ajax({
+        method: "get",
+        url: "/configuracion/getconfig"
+    }).done(function (msg) {
+        // Obtén el elemento de la imagen por su ID
+        var miLogo = document.getElementById('miLogo');
+        var name_empresa = document.getElementById('name_empresa');
+        console.log(msg.logo)
+        // Cambia la imagen reemplazando el atributo src
+        miLogo.src = "{{ asset('img') }}" +"/"+msg.logo;
+        name_empresa.textContent = msg.name;
 
+    })
+</script>

@@ -24,6 +24,27 @@ $(document).ready(function () {
         }
     });
 
+    $('#total').keyup(function(){ 
+        let total = parseFloat($('#total').val());
+        let iva = total * 0.16;
+        let subtotal = total - iva;
+        
+        $('#iva').val(iva.toFixed(2));
+        $('#subtotal').val(subtotal.toFixed(2));
+    });
+
+    $('#iva').keyup(function(){ 
+        let iva = parseFloat($('#iva').val());
+        let total = parseFloat($('#total').val());
+        
+        if(iva==0 || iva == ''){
+            $('#subtotal').val(total);
+        }else{
+            let subtotal = total - iva;
+            $('#subtotal').val(subtotal.toFixed(2));
+        }
+    });
+
     $(document).on('click', '.li-producto', function(){  
         $('#producto').val($(this).text());  
         $('#listar-productos').fadeOut();  

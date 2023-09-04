@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Model\User;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(AdminSeeder::class);
-        // $this->call(RegistrosSeeder::class);
+        
+        
+        Config::create([
+            'name'      => 'Mi empresa',
+            'logo'      => 'logo.svg',
+            'created_at'     =>  '2020-01-17 13:00:00',
+        ]);
     }
 }

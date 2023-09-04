@@ -82,6 +82,12 @@ Route::post('/almacen/nofiscal/update', 'AlmacenNoFiscalController@update');
 Route::post('/almacen/nofiscal/update_stock', 'AlmacenNoFiscalController@update_stock');
 
 
+/* Config */
+Route::get('/configuracion/index', 'ConfigController@index')->name('configuracion.index');
+Route::post('/configuracion/save', 'ConfigController@save')->name('configuracion.save');
+Route::get('/configuracion/getconfig', 'ConfigController@getconfig')->name('configuracion.getconfig');
+
+
 /* Usuarios */
 Route::get('/user/index', 'UserController@index');
 Route::get('/user/data', 'UserController@data');
