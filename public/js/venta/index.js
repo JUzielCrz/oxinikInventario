@@ -24,26 +24,27 @@ $(document).ready(function () {
         }
     });
 
-    $('#total').keyup(function(){ 
-        let total = parseFloat($('#total').val());
-        let iva = total * 0.16;
-        let subtotal = total - iva;
-        
-        $('#iva').val(iva.toFixed(2));
-        $('#subtotal').val(subtotal.toFixed(2));
-    });
+    $('#subtotal').keyup(function(){ actualizar_campos_totales() });
+    $('#iva').keyup(function(){ actualizar_campos_totales() });
 
-    $('#iva').keyup(function(){ 
-        let iva = parseFloat($('#iva').val());
-        let total = parseFloat($('#total').val());
-        
-        if(iva==0 || iva == ''){
-            $('#subtotal').val(total);
+    function actualizar_campos_totales(){
+        let subtotal = 0;
+        let iva=0;
+        if($('#iva').val()==""){
+             iva = 0;
         }else{
-            let subtotal = total - iva;
-            $('#subtotal').val(subtotal.toFixed(2));
+            iva = parseFloat($('#iva').val());
         }
-    });
+        if($('#subtotal').val()==""){
+            subtotal = 0;
+       }else{
+            subtotal = parseFloat($('#subtotal').val());
+       }
+        let total = subtotal + iva;
+
+        $('#total').val(total.toFixed(2));
+    }
+
 
     $(document).on('click', '.li-producto', function(){  
         $('#producto').val($(this).text());  

@@ -58,17 +58,19 @@
                     <div id="listar-productos"></div>
                 </div>
                 <div class="col form-group">
-                    <label for="">Total</label>
-                    <input type="number"  id="total" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
+                    <label for="">Subtotal</label>
+                    <input type="number" id="subtotal" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
                 <div class="col form-group">
                     <label for="">IVA</label>
                     <input type="number"  id="iva" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
                 <div class="col form-group">
-                    <label for="">Subtotal</label>
-                    <input type="number" id="subtotal" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
+                    <label for="">Total</label>
+                    <input type="number"  id="total" class="form-control form-control-sm numero-decimal-positivo" placeholder="$0.0">
                 </div>
+                
+                
                 
                 
                 <div class="col form-group">
