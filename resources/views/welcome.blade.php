@@ -38,7 +38,10 @@
         <!-- Image and text -->
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand ml-4" href="#">
-                <img src="img/logo.svg" style="width: 150px" alt="">
+            @php
+                $url="img/".$config->logo;
+            @endphp
+                <img src={{$url}} style="width: 100px" class="img-fluid" alt="">
             </a>
             <a class="navbar-brand" href="{{ route('login') }}" style="font-size: 16px">
                 <i class="fas fa-sign-in-alt"></i>
