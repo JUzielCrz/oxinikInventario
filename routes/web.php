@@ -55,6 +55,9 @@ Route::post('/compra/save', 'CompraController@save');
 Route::get('/compra/nota/lista', 'CompraController@index_nota');
 Route::get('/compra/nota/data', 'CompraController@nota_data');
 Route::get('/compra/nota/show/{id}', 'CompraController@nota_show')->name('compras.nota.show');
+Route::get('/compra/nota/edit/{id}', 'CompraController@edit')->name('compras.nota.edit');
+Route::post('/compra/nota/update/{id}', 'CompraController@update')->name('compras.nota.update');
+Route::get('/compra/nota/product/delete/{id}', 'CompraController@nota_product_delete')->name('compras.nota.product.delete');
 
 /* Venta */
 Route::get('/venta/index', 'VentaController@index');

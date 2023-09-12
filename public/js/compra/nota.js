@@ -33,8 +33,8 @@ $(document).ready(function () {
             {data: 'fecha'},
             {data: 'total_general'},
             {data: 'btnShow'},
-            
         ]
     });
 
+    
 });
