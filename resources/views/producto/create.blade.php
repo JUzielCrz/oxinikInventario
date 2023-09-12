@@ -22,6 +22,7 @@
                 <option value="litros">litros</option>
                 <option value="kit">kit</option>
                 <option value="unidad">unidad</option>
+                <option value="carga">carga</option>
             </select>
         </div>
         <div class="form-group col-md-6">
