@@ -13,6 +13,8 @@ class Producto extends Model
                         'descripcion', 
                         'clave_sat',
                         'unidad_medida',
+                        'unidad_medida_dos',
+                        'unidad_conversion',
                         'precio_comrpa',
                         'precio_venta',
                         'precio_minimo',

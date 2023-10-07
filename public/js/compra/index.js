@@ -48,6 +48,30 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('click', '.li-producto', function(){  
+        const product =$(this).text()
+        $('#producto').val(product);  
+        $('#listar-productos').fadeOut();
+
+        var idProduct = product.split('-');
+        $.get('/producto/show/' + idProduct[0] , function(msg) {
+            $("#unidad_medida").empty();
+            if(msg.data.unidad_medida_secundaria == null){
+                $("#unidad_medida").append(
+                    '<option value="unidad_medida_base" selected>'+msg.data.unidad_medida_base+'</option>'
+                );
+            }else{
+                $("#unidad_medida").append(
+                    '<option value="" disabled selected>Selecciona</option>'+
+                    '<option value="unidad_medida_base">'+msg.data.unidad_medida_base+'</option>'+
+                    '<option value="unidad_medida_secundaria">'+msg.data.unidad_medida_secundaria+'</option>'
+                );
+            }
+        })
+
+    });  
+
+
     $('#subtotal').keyup(function(){ actualizar_campos_totales() });
     $('#iva').keyup(function(){ actualizar_campos_totales() });
 
@@ -68,15 +92,9 @@ $(document).ready(function () {
 
         $('#total').val(total.toFixed(2));
     }
-
-    $(document).on('click', '.li-producto', function(){  
-        $('#producto').val($(this).text());  
-        $('#listar-productos').fadeOut();  
-    });  
-
     
     function insertar_producto() {
-        var campo= ['producto','cantidad','subtotal', 'total', 'facturado'];
+        var campo= ['producto','cantidad', 'unidad_medida','subtotal', 'total', 'facturado'];
         var campovacio = [];
 
         $.each(campo, function(index){
@@ -118,6 +136,7 @@ $(document).ready(function () {
             "<tr class='tr-class-producto'>"+
                 "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
                 "<td>"+$("#cantidad").val()+"</td><input type='hidden' name='arrCantidad[]' value='"+$('#cantidad').val() +"'></input>"+
+                "<td>"+$("#unidad_medida").find('option:selected').text()+"</td><input type='hidden' name='arrUnidadMedida[]' value='"+$('#unidad_medida').val() +"'></input>"+
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
                 "<td>"+iva_product+"</td><input type='hidden' name='arrIva[]' value='"+iva_product +"'></input>"+
                 "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
@@ -125,9 +144,9 @@ $(document).ready(function () {
                 "<td>"+ "<button type='button' class='btn btn-naranja' id='btn-eliminar-fila'><span class='fas fa-window-close'></span></button>" +"</td>"+
             "</tr>"
         );
+        
 
         actualizarTotal();
-
         limpiar_campos_producto();
     }
 
@@ -135,7 +154,7 @@ $(document).ready(function () {
         var sum_totales = 0;
 
         $(".tr-class-producto").each(function(){
-            var precio_producto=$(this).find("td")[4].innerHTML;
+            var precio_producto=$(this).find("td")[5].innerHTML;
             sum_totales=sum_totales+parseFloat(precio_producto);
         })
         $('#h5-total-general').replaceWith(
@@ -226,6 +245,7 @@ $(document).ready(function () {
         $("#iva").val('')
         $("#total").val('')
         $("#facturado").val('')
+        $("#unidad_medida").empty();
     }
     function limpiar_campos_compra(){
         $("#provedor").val('')

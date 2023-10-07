@@ -12,18 +12,25 @@
                     <table id="table-data-almacen" class="table table-sm table-hover table-bordered" style="font-size:14px">
                         <thead style="font-size:12px">
                             <tr>
-                                <th>PRODUCTO</th>
-                                <th>U.M.</th>
-                                <th>CLAVE SAT</th>
-                                <th>ENTRADAS</th>
-                                <th>SALIDAS</th>
-                                <th>STOCK</th>
-                                <th>P.COMPRA</th>
-                                <th>P.VENTA</th>
-                                <th>P.MINIMO</th>
-                                <th>OBSERVACIONES</th>
-                                <th></th>
-                                <th></th>
+                                <th rowspan="2">PRODUCTO</th>
+                                <th rowspan="2">CLAVE SAT</th>
+                                <th colspan="2">ENTRADAS</th>
+                                <th colspan="2">SALIDAS</th> 
+                                <th colspan="2">STOCK</th>
+                                <th rowspan="2">P.COMPRA</th>
+                                <th rowspan="2">P.VENTA</th>
+                                <th rowspan="2">P.MINIMO</th>
+                                <th rowspan="2">OBSERVACIONES</th>
+                                <th rowspan="2"></th>
+                                <th rowspan="2"></th>
+                            </tr>
+                            <tr>
+                                <th>Unidad Med 1</th>
+                                <th>Unidad Med 2</th>
+                                <th>Unidad Med 1</th>
+                                <th>Unidad Med 2</th>
+                                <th>Unidad Med 1</th>
+                                <th>Unidad Med 2</th>
                             </tr>
                         </thead>
                     </table>

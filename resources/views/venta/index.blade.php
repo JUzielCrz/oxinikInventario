@@ -48,14 +48,20 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col form-group">
-                    <label for="">Cantidad</label>
-                    <input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#">
-                </div>
                 <div class="col-md-4 form-group">
                     <label for="">Producto</label>
                     <input type="text" name="producto" id="producto" class="form-control form-control-sm" placeholder="Nombre">
                     <div id="listar-productos"></div>
+                </div>
+                <div class="col form-group">
+                    <label for="">Cantidad</label>
+                    <input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm numero-decimal-positivo" placeholder="#">
+                </div>
+                <div class="col form-group">
+                    <label for="">U.Medida</label>
+                    <select name="" id="unidad_medida" class="form-control form-control-sm" >
+                        <option value="" disabled selected>Selecciona</option>
+                    </select>
                 </div>
                 <div class="col form-group">
                     <label for="">Subtotal</label>
@@ -94,6 +100,7 @@
                         <tr>
                             <th>PODUCTO</th>
                             <th>CANTIDAD</th>
+                            <th>UNI. MED.</th>
                             <th>SUBTOTAL</th>
                             <th>IVA</th>
                             <th>TOTAL</th>

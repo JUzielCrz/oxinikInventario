@@ -29,8 +29,8 @@ class ProductoController extends Controller
                 $tanques
             )                 
             ->addColumn( 'btn-history', '<a class="btn btn-sm btn btn-outline-secondary" href="{{route(\'product.history\', $id)}}" data-toggle="tooltip" data-placement="top" title="Historial"><i class="fas fa-history"></i></a>')
-            ->addColumn( 'btn-edit', '<button class="btn btn-sm btn-outline-secondary btn-class-edit btn-xs" data-id="{{$id}}"><span class="far fa-edit"></span></button>')
-            ->addColumn( 'btn-delete', '<button class="btn btn-smbtn-outline-secondary btn-class-delete btn-xs" data-id="{{$id}}"><span class="fas fa-trash"></span></button>')
+            ->addColumn( 'btn-edit', '<button class="btn btn-sm btn-outline-secondary btn-class-edit btn-xs" data-id="{{$id}}" data-toggle="tooltip" data-placement="top" title="Editar"><span class="far fa-edit"></span></button>')
+            ->addColumn( 'btn-delete', '<button class="btn btn-sm btn-outline-secondary btn-class-delete btn-xs" data-id="{{$id}}" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fas fa-trash"></span></button>')
             ->rawColumns(['btn-history','btn-edit','btn-delete'])
             ->toJson();
     }
@@ -38,14 +38,16 @@ class ProductoController extends Controller
     public function create(Request $request){
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
-            'unidad_medida' => ['required'],
+            'unidad_medida_base' => ['required'],
             'stock_inicial' => ['required'],
         ]);
 
         $producto = new Producto();
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
-        $producto->unidad_medida = $request->unidad_medida;
+        $producto->unidad_medida_base = $request->unidad_medida_base;
+        $producto->unidad_medida_secundaria = $request->unidad_medida_secundaria;
+        $producto->unidad_conversion = $request->unidad_conversion;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
         $producto->precio_minimo = $request->precio_minimo;
@@ -63,6 +65,7 @@ class ProductoController extends Controller
         $almacen->producto_id = $producto->id;
         $almacen->stock = 0;
         $almacen->save();
+
 
         return response()->json(['mensaje'=>'Registrado Correctamente']);
 
@@ -82,7 +85,9 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
-        $producto->unidad_medida = $request->unidad_medida;
+        // $producto->unidad_medida_base = $request->unidad_medida_base;
+        $producto->unidad_medida_secundaria = $request->unidad_medida_secundaria;
+        $producto->unidad_conversion = $request->unidad_conversion;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
         $producto->precio_minimo = $request->precio_minimo;

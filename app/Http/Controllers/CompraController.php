@@ -69,7 +69,7 @@ class CompraController extends Controller
 
         if(count($request->arrProducto) > 0){
             
-            
+            //CREAR COMPRA
             $cadenaProvedor=explode('- ', $request->provedor);
             $compra = new Compra();
             $compra->provedor_id = intval($cadenaProvedor[0]);
@@ -78,46 +78,60 @@ class CompraController extends Controller
             $compra->total_general = $request->total_general;
             $compra->observaciones = $request->observaciones;
             $compra->fecha = $request->fecha;
+            $compra->save();
             
-            if($compra->save()){
-                foreach( $request->arrProducto AS $indice => $g){
-                    $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
-                    $productos=new CompraProducto();
-                    $productos->compra_id = $compra->id;
-                    $productos->producto_id = intval($cadenaProducto[0]);
-                    $productos->cantidad = $request->arrCantidad[$indice];
-                    $productos->subtotal = $request->arrSubTotal[$indice];
-                    $productos->iva = $request->arrIva[$indice];
-                    $productos->total = $request->arrTotal[$indice];
-                    $productos->facturado = $request->arrFacturado[$indice];
-                    $productos->save();
+            foreach( $request->arrProducto AS $indice => $g){
+                // OBTENER PRODUCTO
+                $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
+                $producto_id = intval($cadenaProducto[0]);
+                $product= Producto::find($producto_id);
 
-                    if($request->arrFacturado[$indice] == 'SI'){
-                        $stock_almacen = AlmacenFiscal::where('producto_id',$productos->producto_id)->first();
-                        if($stock_almacen){
-                            $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
-                            $sumentradas=$stock_almacen->entradas+$productos->cantidad;
-                            $stock_almacen->stock = $suma;
-                            $stock_almacen->entradas = $sumentradas;
-                            $stock_almacen->save();
-                        }else{
-                            $new_registro= new AlmacenFiscal();
-                            $new_registro->producto_id = $productos->producto_id;
-                            $new_registro->stock =$request->arrCantidad[$indice];
-                            $new_registro->entradas = $request->arrCantidad[$indice];
-                            $new_registro->save();
-                        }
-                    }else{
-                        $stock_almacen = Almacen::where('producto_id',$productos->producto_id)->first();
-                        $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
-                        $sumentradas=$stock_almacen->entradas+$productos->cantidad;
+                //CALCULAR STOCK
+                $unit_measure =  $request->arrUnidadMedida[$indice];
+                $quantity = $request->arrCantidad[$indice];
+
+                if ($unit_measure == 'unidad_medida_base'){
+                    $quantity_stock = $quantity;
+                }else if($unit_measure == 'unidad_medida_secundaria'){
+                    $quantity_stock = $quantity * $product->unidad_conversion;
+                }
+
+                $buyProducts=new CompraProducto();
+                $buyProducts->compra_id = $compra->id;
+                $buyProducts->producto_id = $producto_id;
+                $buyProducts->cantidad = $quantity_stock;
+                $buyProducts->subtotal = $request->arrSubTotal[$indice];
+                $buyProducts->iva = $request->arrIva[$indice];
+                $buyProducts->total = $request->arrTotal[$indice];
+                $buyProducts->facturado = $request->arrFacturado[$indice];
+                $buyProducts->save();
+
+                if($request->arrFacturado[$indice] == 'SI'){
+                    $stock_almacen = AlmacenFiscal::where('producto_id',$buyProducts->producto_id)->first();
+                    if($stock_almacen){
+                        $suma=$stock_almacen->stock +  $quantity_stock;
+                        $sumentradas=$stock_almacen->entradas+$quantity_stock;
                         $stock_almacen->stock = $suma;
                         $stock_almacen->entradas = $sumentradas;
                         $stock_almacen->save();
+                    }else{
+                        $new_registro= new AlmacenFiscal();
+                        $new_registro->producto_id = $buyProducts->producto_id;
+                        $new_registro->stock =$quantity_stock;
+                        $new_registro->entradas = $quantity_stock;
+                        $new_registro->save();
                     }
+                }else{
+                    $stock_almacen = Almacen::where('producto_id',$buyProducts->producto_id)->first();
+                    $suma=$stock_almacen->stock +  $quantity_stock;
+                    $sumentradas=$stock_almacen->entradas+$buyProducts->cantidad;
+                    $stock_almacen->stock = $suma;
+                    $stock_almacen->entradas = $sumentradas;
+                    $stock_almacen->save();
                 }
-                return response()->json(['mensaje'=>'success']);
             }
+            return response()->json(['mensaje'=>'success']);
+        
         }
     }
 
@@ -164,7 +178,7 @@ class CompraController extends Controller
         
         $productos=CompraProducto::
         join('producto', 'producto.id','=','compra_productos.producto_id')
-        ->select('producto.nombre','compra_productos.*')
+        ->select('producto.nombre', 'producto.unidad_conversion', 'producto.unidad_medida_base', 'producto.unidad_medida_secundaria','compra_productos.*')
         ->where('compra_id',$idCompra)->get();
         
         $data=["nota"=>$nota, "productos"=>$productos, "proveedor"=>$proveedor];
@@ -172,14 +186,14 @@ class CompraController extends Controller
         
     }
 
-    public function update(Request $request,$id){
+    public function update_encabezado(Request $request,$id){
         $request->validate([
             'provedor' => ['required'],
             'folio' => ['required'],
             'tipo_folio' => ['required'],
-            'total_general' => ['required'],
             'fecha' => ['required'],
         ]);
+        dd($request->all());
 
         $cadenaProvedor=explode('- ', $request->provedor);
 
@@ -187,54 +201,67 @@ class CompraController extends Controller
         $compra->provedor_id = intval($cadenaProvedor[0]);
         $compra->tipo_folio = $request->tipo_folio;
         $compra->folio = $request->folio;
-        $compra->total_general = $request->total_general;
         $compra->observaciones = $request->observaciones;
         $compra->fecha = $request->fecha;
         $compra->save();
 
-        if($request->arrProducto){
-                foreach( $request->arrProducto AS $indice => $g){
-                    $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
+    }
 
-                    $productos=new CompraProducto();
-                    $productos->compra_id = $compra->id;
-                    $productos->producto_id = intval($cadenaProducto[0]);
-                    $productos->cantidad = $request->arrCantidad[$indice];
-                    $productos->subtotal = $request->arrSubTotal[$indice];
-                    $productos->iva = $request->arrIva[$indice];
-                    $productos->total = $request->arrTotal[$indice];
-                    $productos->facturado = $request->arrFacturado[$indice];
-                    $productos->save();
+    public function product_add(Request $request,$nota_id){
+            $cadenaProducto=explode('- ', $request->producto);
+            $producto_id= intval($cadenaProducto[0]);
+            $product= Producto::find($producto_id);
 
-                    if($request->arrFacturado[$indice] == 'SI'){
-                        $stock_almacen = AlmacenFiscal::where('producto_id',$productos->producto_id)->first();
-                        if($stock_almacen){
-                            $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
-                            $sumentradas=$stock_almacen->entradas + $productos->cantidad;
-                            
-                            $stock_almacen->stock = $suma;
-                            $stock_almacen->entradas = $sumentradas;
-                            $stock_almacen->save();
-                        }else{
-                            $new_registro= new AlmacenFiscal();
-                            $new_registro->producto_id = $productos->producto_id;
-                            $new_registro->stock =$request->arrCantidad[$indice];
-                            $new_registro->entradas = $request->arrCantidad[$indice];
-                            $new_registro->save();
-                        }
-                    }else{
-                        $stock_almacen = Almacen::where('producto_id',$productos->producto_id)->first();
-                        $suma=$stock_almacen->stock +  $request->arrCantidad[$indice];
-                        $sumentradas=$stock_almacen->entradas+$productos->cantidad;
-                        $stock_almacen->stock = $suma;
-                        $stock_almacen->entradas = $sumentradas;
-                        $stock_almacen->save();
-                    }
-                }
-                return response()->json(['mensaje'=>'success']);
+            //CALCULAR STOCK
+            $unit_measure =  $request->unidad_medida;
+            $quantity = $request->cantidad;
+            if ($unit_measure == 'unidad_medida_base'){
+                $quantity_stock = $quantity;
+            }else if($unit_measure == 'unidad_medida_secundaria'){
+                $quantity_stock = $quantity * $product->unidad_conversion;
+            }            
             
-        }
 
+            $buy_product = new CompraProducto();
+            $buy_product->compra_id = $nota_id;
+            $buy_product->producto_id = $producto_id;
+            $buy_product->cantidad = $quantity_stock;
+            $buy_product->subtotal = $request->subtotal;
+            $buy_product->iva = $request->iva;
+            $buy_product->total = $request->total;
+            $buy_product->facturado = $request->facturado;
+            $buy_product->save();
+
+
+            if($request->facturado== 'SI'){
+                $stock_almacen = AlmacenFiscal::where('producto_id',$buy_product->producto_id)->first();
+                if($stock_almacen){
+                    $suma=$stock_almacen->stock +  $quantity_stock;
+                    $sumentradas=$stock_almacen->entradas+$quantity_stock;
+                    $stock_almacen->stock = $suma;
+                    $stock_almacen->entradas = $sumentradas;
+                    $stock_almacen->save();
+                }else{
+                    $new_registro= new AlmacenFiscal();
+                    $new_registro->producto_id = $buy_product->producto_id;
+                    $new_registro->stock =$quantity_stock;
+                    $new_registro->entradas = $quantity_stock;
+                    $new_registro->save();
+                }
+            }else{
+                $stock_almacen = Almacen::where('producto_id',$buy_product->producto_id)->first();
+                $suma=$stock_almacen->stock +  $quantity_stock;
+                $sumentradas=$stock_almacen->entradas+$quantity_stock;
+                $stock_almacen->stock = $suma;
+                $stock_almacen->entradas = $sumentradas;
+                $stock_almacen->save();
+            }
+            
+            $preciosProductos= CompraProducto::where('compra_id', $nota_id)->sum('total');
+            $compra= Compra::find($nota_id);
+            $compra->total_general = $preciosProductos;
+            $compra->save();
+            
     }
 
     public function nota_product_delete($id){

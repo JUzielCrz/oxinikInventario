@@ -4,37 +4,89 @@ $(document).ready(function () {
     
 
     var listtabla = $('#table-data-almacen').DataTable({
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
+        language: {"url": "/js/language_dt_spanish.json"},
         processing: true,
         serverSider: true,
         ajax: '/almacen/general/data',
         columns:[
             {data: 'nombre'},
-            {data: 'unidad_medida'},
             {data: 'clave_sat'},
-            {data: 'inicial'},
-            {data: 'sumEntradas'},
-            {data: 'sumSalidas'},
-            {data: 'sumStock'},
+            //INICIAL
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.inicial + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.inicial / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+            
+            //ENTRADAS
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.sumEntradas + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.sumEntradas / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+
+            //SalidasAS
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.sumSalidas + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.sumSalidas / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+
+            //sumStock
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.sumStock + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.sumStock / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+
             {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},

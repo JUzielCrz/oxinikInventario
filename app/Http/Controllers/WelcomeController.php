@@ -21,13 +21,13 @@ class WelcomeController extends Controller
         ->leftjoin('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
         ->select(
             'almacen.id as idAlmacen',
-            'producto.nombre',
-            'producto.clave_sat', 
-            'producto.unidad_medida',
+            'producto.*',
             'producto.id as idProducto', 
-            'producto.precio_minimo', 
-            'producto.precio_venta', 
-            DB::raw('(almacen.stock + almacen_fiscal.stock) as sumStock')
+            // DB::raw(
+            //     '
+            //     (almacen.stock + almacen_fiscal.stock) as sumStock,
+            //     (sumStock / producto.unidad_conversion) as sumStock2,
+            //     ')
         );
         return DataTables::of(
             $almacen

@@ -47,8 +47,24 @@ $(document).ready(function () {
 
 
     $(document).on('click', '.li-producto', function(){  
-        $('#producto').val($(this).text());  
-        $('#listar-productos').fadeOut();  
+        const product =$(this).text()
+        $('#producto').val(product);  
+        $('#listar-productos').fadeOut();
+
+        var idProduct = product.split('-');
+        $.get('/producto/show/' + idProduct[0] , function(msg) {
+            if(msg.data.unidad_medida_secundaria == null){
+                $("#unidad_medida").append(
+                    '<option value="unidad_medida_base" selected>'+msg.data.unidad_medida_base+'</option>'
+                );
+            }else{
+                $("#unidad_medida").append(
+                    '<option value="" disabled selected>Selecciona</option>'+
+                    '<option value="unidad_medida_base">'+msg.data.unidad_medida_base+'</option>'+
+                    '<option value="unidad_medida_secundaria">'+msg.data.unidad_medida_secundaria+'</option>'
+                );
+            }
+        })
     });  
 
     $('#cliente').keyup(function(){ 
@@ -130,6 +146,7 @@ $(document).ready(function () {
             "<tr class='tr-class-producto'>"+
                 "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
                 "<td class='text-center'>"+"<input type='number' name='arrCantidad[]' value='"+$('#cantidad').val() +"' id='arrCantidad' class='form-control form-control-sm numero-entero-positivo' style='width:10rem' ></input>"+"</td>"+
+                "<td>"+$("#unidad_medida").find('option:selected').text()+"</td><input type='hidden' name='arrUnidadMedida[]' value='"+$('#unidad_medida').val() +"'></input>"+
                 "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
                 "<td>"+$("#iva").val()+"</td><input type='hidden' name='arrIva[]' value='"+$('#iva').val() +"'></input>"+
                 "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
@@ -249,6 +266,7 @@ $(document).ready(function () {
         $("#iva").val('')
         $("#total").val('')
         $("#facturado").val('')
+        $("#unidad_medida").empty();
     }
     function limpiar_campos_venta(){
         $("#cliente").val('')

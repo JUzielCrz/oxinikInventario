@@ -26,7 +26,7 @@
                                 <th>NOMBRE</th>
                                 <th>DESCRIPCIÓN</th>
                                 <th>CLAVE SAT</th>
-                                <th>UNIDAD MEDIDA</th>
+                                <th>UNIDADES DE MEDIDA</th>
                                 <th>P. COMPRA</th>
                                 <th>P. VENTA</th>
                                 <th>P. MINIMO</th>
@@ -45,7 +45,7 @@
 
     <!-- Modal Insertar fila-->
     <div class="modal fade" id="modal-insertar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Nuevo Producto</h5>
@@ -66,10 +66,10 @@
 
     <!-- Modal Insertar fila-->
     <div class="modal fade" id="modal-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog  modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Producto</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Editar Producto</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

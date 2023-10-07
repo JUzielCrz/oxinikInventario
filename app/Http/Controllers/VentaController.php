@@ -87,38 +87,52 @@ class VentaController extends Controller
             $venta->fecha = $request->fecha;
             $venta->total_general = $request->total_general;
             $venta->observaciones = $request->observaciones;
-            
-            if($venta->save()){
+            $venta->save();
 
-                foreach( $request->arrProducto AS $indice => $g){
-                    
-                    $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
-                    $productos=new VentaProducto();
-                    $productos->venta_id = $venta->id;
-                    $productos->producto_id = intval($cadenaProducto[0]);
-                    $productos->cantidad = $request->arrCantidad[$indice];
-                    $productos->subtotal = $request->arrSubTotal[$indice];
-                    $productos->iva = $request->arrIva[$indice];
-                    $productos->total = $request->arrTotal[$indice];
-                    $productos->facturado = $request->arrFacturado[$indice];
-                    $productos->save();
-                    
-                    if($request->arrFacturado[$indice] == 'SI'){
-                        $search_producto = AlmacenFiscal::where('producto_id',$productos->producto_id)->first();
-                    }
-                    if($request->arrFacturado[$indice] == 'NO'){
-                        $search_producto = Almacen::where('producto_id',$productos->producto_id)->first();
-                    }
-                    
-                    $resta= $search_producto->stock - $productos->cantidad;
-                    $sumsalidas=$search_producto->salidas+$productos->cantidad;
-                    $search_producto->stock = $resta;
-                    $search_producto->salidas = $sumsalidas;
-                    $search_producto->save();
+            foreach( $request->arrProducto AS $indice => $g){
+                // OBTENER PRODUCTO
+                $cadenaProducto=explode('- ', $request->arrProducto[$indice]);
+                $producto_id = intval($cadenaProducto[0]);
+                $product= Producto::find($producto_id);
+
+
+                //CALCULAR STOCK
+                $unit_measure =  $request->arrUnidadMedida[$indice];
+                $quantity = $request->arrCantidad[$indice];
+
+                if ($unit_measure == 'unidad_medida_base'){
+                    $quantity_stock = $quantity;
+                }else if($unit_measure == 'unidad_medida_secundaria'){
+                    $quantity_stock = $quantity * $product->unidad_conversion;
+                }
+
+
+                $buyProducts=new VentaProducto();
+                $buyProducts->venta_id = $venta->id;
+                $buyProducts->producto_id = $producto_id;
+                $buyProducts->cantidad = $quantity_stock;
+                $buyProducts->subtotal = $request->arrSubTotal[$indice];
+                $buyProducts->iva = $request->arrIva[$indice];
+                $buyProducts->total = $request->arrTotal[$indice];
+                $buyProducts->facturado = $request->arrFacturado[$indice];
+                $buyProducts->save();
+                
+                if($request->arrFacturado[$indice] == 'SI'){
+                    $search_producto = AlmacenFiscal::where('producto_id',$buyProducts->producto_id)->first();
+                }
+                if($request->arrFacturado[$indice] == 'NO'){
+                    $search_producto = Almacen::where('producto_id',$buyProducts->producto_id)->first();
                 }
                 
-                return response()->json(['mensaje'=>'success']);
+                $resta= $search_producto->stock - $quantity_stock;
+                $sumsalidas=$search_producto->salidas + $quantity_stock;
+                $search_producto->stock = $resta;
+                $search_producto->salidas = $sumsalidas;
+                $search_producto->save();
             }
+                
+                return response()->json(['mensaje'=>'success']);
+            
         }
     }
 

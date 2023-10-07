@@ -91,5 +91,4 @@
 @include('layouts.scripts')
 
 <!--Scripts-->
-<script src="{{ asset('js/producto/index.js') }}"></script>
 

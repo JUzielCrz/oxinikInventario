@@ -1,0 +1,11 @@
+        <div class="form-group col-md-6">
+            <label for="">Stock Inicial</label>
+            <div class="mb-3">
+                <div class="input-group input-group-sm is-invalid">
+                  <input type="number" name="stock_inicial" id="stock_inicial" class="form-control form-control-sm numero-decimal-positivo" placeholder="#" required>
+                  <div class="input-group-prepend">
+                    <label id="label_um1" class="input-group-text" for="validatedInputGroupSelect">U.M.</label>
+                  </div>
+                </div>
+            </div>
+        </div>

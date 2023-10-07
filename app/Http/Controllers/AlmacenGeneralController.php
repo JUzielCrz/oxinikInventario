@@ -23,7 +23,7 @@ class AlmacenGeneralController extends Controller
         $almacen=Producto::
         leftjoin('almacen','producto.id','=','almacen.producto_id')
         ->leftjoin('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
-        ->select('producto.nombre','producto.unidad_medida','producto.clave_sat','almacen.inicial','producto.precio_compra','producto.precio_venta','producto.precio_minimo',
+        ->select('producto.*','almacen.inicial',
             DB::raw('
             (almacen.entradas + almacen_fiscal.entradas) as sumEntradas,
             (almacen.salidas + almacen_fiscal.salidas) as sumSalidas,

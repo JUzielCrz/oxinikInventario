@@ -5,7 +5,7 @@ $(document).ready(function () {
     $(document).on("click","#btn-anadir-producto", insertar_producto);
     $(document).on("click","#btn-eliminar-fila", eliminar_fila);
 
-    $(document).on("click","#btn-save-compra", save_compra);
+    // $(document).on("click","#btn-save-compra", save_compra);
 
     $("#nav-ico-compra").addClass("active");
     
@@ -72,13 +72,30 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '.li-producto', function(){  
-        $('#producto').val($(this).text());  
-        $('#listar-productos').fadeOut();  
+        const product =$(this).text()
+        $('#producto').val(product);  
+        $('#listar-productos').fadeOut();
+
+        var idProduct = product.split('-');
+        $.get('/producto/show/' + idProduct[0] , function(msg) {
+            $("#unidad_medida").empty();
+            if(msg.data.unidad_medida_secundaria == null){
+                $("#unidad_medida").append(
+                    '<option value="unidad_medida_base" selected>'+msg.data.unidad_medida_base+'</option>'
+                );
+            }else{
+                $("#unidad_medida").append(
+                    '<option value="" disabled selected>Selecciona</option>'+
+                    '<option value="unidad_medida_base">'+msg.data.unidad_medida_base+'</option>'+
+                    '<option value="unidad_medida_secundaria">'+msg.data.unidad_medida_secundaria+'</option>'
+                );
+            }
+        })
     });  
 
     
     function insertar_producto() {
-        var campo= ['producto','cantidad','subtotal', 'total', 'facturado'];
+        var campo= ['producto','cantidad', 'unidad_medida', 'subtotal', 'total', 'facturado'];
         var campovacio = [];
 
         $.each(campo, function(index){
@@ -116,28 +133,34 @@ $(document).ready(function () {
         }
         
 
-        $('#tbody-lista-productos').append(
-            "<tr class='tr-class-producto'>"+
-                "<td>"+$("#producto").val()+"</td><input type='hidden' name='arrProducto[]' value='"+$('#producto').val() +"'></input>"+
-                "<td>"+$("#cantidad").val()+"</td><input type='hidden' name='arrCantidad[]' value='"+$('#cantidad').val() +"'></input>"+
-                "<td>"+$("#subtotal").val()+"</td><input type='hidden' name='arrSubTotal[]' value='"+$('#subtotal').val() +"'></input>"+
-                "<td>"+iva_product+"</td><input type='hidden' name='arrIva[]' value='"+iva_product +"'></input>"+
-                "<td>"+$("#total").val()+"</td><input type='hidden' name='arrTotal[]' value='"+$('#total').val() +"'></input>"+
-                "<td>"+$("#facturado").val()+"</td><input type='hidden' name='arrFacturado[]' value='"+$('#facturado').val() +"'></input>"+
-                "<td>"+ "<button type='button' class='btn btn-sm btn-amarillo' id='btn-eliminar-fila'><span class='fas fa-window-close'></span></button>" +"</td>"+
-            "</tr>"
-        );
-
+        $.ajax({
+            method: "post",
+            url: "/compra/nota/update/product_add/"+$("#nota_id").val(),
+            data: $("#form-compra-producto").serialize(), 
+        }).done(function () {
+            Swal.fire(
+                '¡Eliminado!',
+                'Tu producto ha sido eliminado',
+                'success'
+            )
         actualizarTotal();
+        }).fail(function (){
+            Swal.fire(
+                'Error!',
+                'El producto no se puede eliminar',
+                'error'
+            )
+        });
 
-        limpiar_campos_producto();
+        location.reload();
+
     }
 
     function actualizarTotal(){
         var sum_totales = 0;
 
         $(".tr-class-producto").each(function(){
-            var precio_producto=$(this).find("td")[4].innerHTML;
+            var precio_producto=$(this).find("td")[5].innerHTML;
             sum_totales=sum_totales+parseFloat(precio_producto);
         })
         $('#h5-total-general').replaceWith(
@@ -175,7 +198,7 @@ $(document).ready(function () {
                         'success'
                     )
                 fila.remove()
-
+                actualizarTotal();
                 }).fail(function (){
                     Swal.fire(
                         'Error!',
@@ -187,83 +210,87 @@ $(document).ready(function () {
         })
     });
 
-    function save_compra(){
-        var campo= ['provedor','folio','tipo_folio','fecha'];
-        var campovacio = [];
+    // function save_compra(){
+    //     var campo= ['provedor','folio','tipo_folio','fecha'];
+    //     var campovacio = [];
 
-        $.each(campo, function(index){
-            $('#'+campo[index]+'Error').empty();
-            $('#'+campo[index]).removeClass('is-invalid');
-        });
+    //     $.each(campo, function(index){
+    //         $('#'+campo[index]+'Error').empty();
+    //         $('#'+campo[index]).removeClass('is-invalid');
+    //     });
 
-        $.each(campo, function(index){
-            if($("#"+campo[index]).val()=='' || $("#"+campo[index]).val()<=0    ){
-                campovacio.push(campo[index]);
-            }
-        });
+    //     $.each(campo, function(index){
+    //         if($("#"+campo[index]).val()=='' || $("#"+campo[index]).val()<=0    ){
+    //             campovacio.push(campo[index]);
+    //         }
+    //     });
 
-        if(campovacio.length != 0){
-            $.each(campovacio, function(index){
-                $("#"+campovacio[index]).addClass('is-invalid');
-                $("#"+campovacio[index]+'Error').text('Necesario');
-            });
+    //     if(campovacio.length != 0){
+    //         $.each(campovacio, function(index){
+    //             $("#"+campovacio[index]).addClass('is-invalid');
+    //             $("#"+campovacio[index]+'Error').text('Necesario');
+    //         });
 
-            Swal.fire({
-                title: '¡Error!',
-                text: 'Faltan datos de compra',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            })
+    //         Swal.fire({
+    //             title: '¡Error!',
+    //             text: 'Faltan datos de compra',
+    //             icon: 'error',
+    //             confirmButtonText: 'Aceptar'
+    //         })
 
-            return false;
-        }
+    //         return false;
+    //     }
 
-        Swal.fire({
-            icon: 'question',
-            title: 'Seguro que deseas continuar?',
-            showCancelButton: true,
-            confirmButtonText: 'Aceptar',
-            cancelButtonText: 'Cancelar',
-            cancelButtonColor: '#d33',
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                $.ajax({
-                    method: "post",
-                    url: "/compra/nota/update/"+nota_id.value,
-                    data: $("#form-compra").serialize(), 
-                }).done(function(msg){
-                        Swal.fire('¡Guardado!', '', 'success')
-                        location.reload(true);
+    //     Swal.fire({
+    //         icon: 'question',
+    //         title: 'Seguro que deseas continuar?',
+    //         showCancelButton: true,
+    //         confirmButtonText: 'Aceptar',
+    //         cancelButtonText: 'Cancelar',
+    //         cancelButtonColor: '#d33',
+    //     }).then((result) => {
+    //         /* Read more about isConfirmed, isDenied below */
+    //         if (result.isConfirmed) {
+    //             $.ajax({
+    //                 method: "post",
+    //                 url: "/compra/nota/update/"+nota_id.value,
+    //                 data: $("#form-compra").serialize(), 
+    //             }).done(function(msg){
+    //                     Swal.fire('¡Guardado!', '', 'success')
+    //                     location.reload(true);
 
                         
-                }).fail(function (jqXHR, textStatus) {
-                    //Si existe algun error entra aqui
-                    Swal.fire('Verifica tus datos!', '', 'error')
+    //             }).fail(function (jqXHR, textStatus) {
+    //                 //Si existe algun error entra aqui
+    //                 Swal.fire('Verifica tus datos!', '', 'error')
 
-                    var status = jqXHR.status;
-                    if (status === 422) {
-                        $.each(jqXHR.responseJSON.errors, function (key, value) {
-                            var idError = "#" + key + "Error";
-                            //$(idError).removeClass("d-none");
-                            $(idError).text(value);
-                        });
-                    }
-                });
+    //                 var status = jqXHR.status;
+    //                 if (status === 422) {
+    //                     $.each(jqXHR.responseJSON.errors, function (key, value) {
+    //                         var idError = "#" + key + "Error";
+    //                         //$(idError).removeClass("d-none");
+    //                         $(idError).text(value);
+    //                     });
+    //                 }
+    //             });
                 
-            } 
-        })
+    //         } 
+    //     })
         
-    }
+    // }
 
-    function limpiar_campos_producto(){
-        $("#producto").val('')
-        $("#cantidad").val('')
-        $("#subtotal").val('')
-        $("#iva").val('')
-        $("#total").val('')
-        $("#facturado").val('')
-    }
+    // function limpiar_campos_producto(){
+    //     $("#producto").val('')
+    //     $("#cantidad").val('')
+    //     $("#subtotal").val('')
+    //     $("#iva").val('')
+    //     $("#total").val('')
+    //     $("#facturado").val('')
+    //     $("#unidad_medida").empty();
+    //     $("#unidad_medida").append(
+    //         '<option value="" selected>Selecciona</option>'
+    //     );
+    // }
 
 
     $('.numero-entero-positivo').keypress(function (event) {
@@ -292,4 +319,79 @@ $(document).ready(function () {
         } 
         return true;
     });
+
+    $(document).on('click', '#btn_edit_encabezado', function(){  
+        provedor.disabled = false;
+        tipo_folio.disabled = false;
+        folio.disabled = false;
+        fecha.disabled = false;
+        btn_edit_encabezado.disabled = true;
+        btn_guardar_encabezado.disabled = false;
+    });  
+
+    $(document).on('click', '#btn_guardar_encabezado', function(){  
+        
+            var campo= ['provedor','folio','tipo_folio','fecha'];
+            var campovacio = [];
+    
+            $.each(campo, function(index){
+                $('#'+campo[index]+'Error').empty();
+                $('#'+campo[index]).removeClass('is-invalid');
+            });
+    
+            $.each(campo, function(index){
+                if($("#"+campo[index]).val()=='' || $("#"+campo[index]).val()<=0    ){
+                    campovacio.push(campo[index]);
+                }
+            });
+    
+            if(campovacio.length != 0){
+                $.each(campovacio, function(index){
+                    $("#"+campovacio[index]).addClass('is-invalid');
+                    $("#"+campovacio[index]+'Error').text('Necesario');
+                });
+    
+                Swal.fire({
+                    title: '¡Error!',
+                    text: 'Faltan datos de compra',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                })
+    
+                return false;
+            }
+    
+            $.ajax({
+                method: "post",
+                url: "/compra/nota/update/encabezado/"+nota_id.value,
+                data: $("#form-compra").serialize(), 
+            }).done(function(msg){
+                    Swal.fire('¡Guardado!', '', 'success')
+                    provedor.disabled = true;
+                    tipo_folio.disabled = true;
+                    folio.disabled = true;
+                    fecha.disabled = true;
+                    btn_edit_encabezado.disabled = false;
+                    btn_guardar_encabezado.disabled = true;
+                    
+            }).fail(function (jqXHR, textStatus) {
+                //Si existe algun error entra aqui
+                Swal.fire('Verifica tus datos!', '', 'error')
+
+                var status = jqXHR.status;
+                if (status === 422) {
+                    $.each(jqXHR.responseJSON.errors, function (key, value) {
+                        var idError = "#" + key + "Error";
+                        //$(idError).removeClass("d-none");
+                        $(idError).text(value);
+                    });
+                }
+            });
+            
+
+        
+
+
+
+    });  
 });

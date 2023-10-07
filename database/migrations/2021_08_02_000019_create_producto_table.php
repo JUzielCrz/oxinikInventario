@@ -16,7 +16,9 @@ class CreateProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('unidad_medida');
+            $table->string('unidad_medida_base');
+            $table->string('unidad_medida_secundaria')->nullable();
+            $table->string('unidad_conversion')->nullable();
             $table->string('descripcion')->nullable();
             $table->string('clave_sat')->nullable();
             $table->float('precio_compra');

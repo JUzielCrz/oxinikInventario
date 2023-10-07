@@ -4,36 +4,68 @@ $(document).ready(function () {
     
 
     var listtabla = $('#table-data-almacen').DataTable({
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
+        language: {"url": "/js/language_dt_spanish.json"},
         processing: true,
         serverSider: true,
         ajax: '/almacen/fiscal/data',
         columns:[
             {data: 'nombre'},
-            {data: 'unidad_medida'},
             {data: 'clave_sat'},
-            {data: 'entradas'},
-            {data: 'salidas'},
-            {data: 'stock'},
+            //entradas
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.entradas + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.entradas / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+            //salidas
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.salidas + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.salidas / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+
+            //stock
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.stock + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.stock / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
             {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},

@@ -4,26 +4,7 @@ $(document).ready(function () {
     
 
     var listtabla = $('#table-data-producto').DataTable({
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
+        language: {"url": "/js/language_dt_spanish.json"},
         processing: true,
         serverSider: true,
         ajax: '../producto/data',
@@ -32,7 +13,16 @@ $(document).ready(function () {
             {data: 'nombre'},
             {data: 'descripcion'},
             {data: 'clave_sat'},
-            {data: 'unidad_medida'},
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_medida_secundaria !=null){
+                        return data.unidad_medida_base + '<br>' + data.unidad_medida_secundaria;
+                    }else{
+                        return data.unidad_medida_base;
+                    }
+                }
+            },
             {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},
@@ -156,6 +146,10 @@ $(document).ready(function () {
         $("#precio_minimo").val("");
         $("#descripcion").val("");
         $("#stock_inicial").val("");
+        $("#unidad_medida_base").val("");
+        $("#unidad_medida_secundaria").val("");
+        $("#unidad_conversion").val("");
+        $("#label_um1").empty();
     }   
 
     function destroy_fila(){
