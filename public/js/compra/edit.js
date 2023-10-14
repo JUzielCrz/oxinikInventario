@@ -50,27 +50,42 @@ $(document).ready(function () {
         }
     });
 
-    $('#subtotal').keyup(function(){ actualizar_campos_totales() });
-    $('#iva').keyup(function(){ actualizar_campos_totales() });
+    // $('#subtotal').keyup(function(){ actualizar_campos_totales() });
+    // $('#iva').keyup(function(){ actualizar_campos_totales() });
 
-    function actualizar_campos_totales(){
-        let subtotal = 0;
-        let iva=0;
-        if($('#iva').val()==""){
-             iva = 0;
-        }else{
-            iva = parseFloat($('#iva').val());
-        }
-        if($('#subtotal').val()==""){
-            subtotal = 0;
-       }else{
-            subtotal = parseFloat($('#subtotal').val());
-       }
+    // function actualizar_campos_totales(){
+    //     let subtotal = 0;
+    //     let iva=0;
+    //     if($('#iva').val()==""){
+    //          iva = 0;
+    //     }else{
+    //         iva = parseFloat($('#iva').val());
+    //     }
+    //     if($('#subtotal').val()==""){
+    //         subtotal = 0;
+    //    }else{
+    //         subtotal = parseFloat($('#subtotal').val());
+    //    }
+    //     let total = subtotal + iva;
+
+    //     $('#total').val(total.toFixed(2));
+    // }
+
+    $('#subtotal').keyup(function(){ 
+        var subtotal = ($('#subtotal').val() === "") ? 0 : parseFloat($('#subtotal').val());
+        let iva = subtotal*0.16;
+        $('#iva').val(iva.toFixed(2))
         let total = subtotal + iva;
-
         $('#total').val(total.toFixed(2));
-    }
+    });
+    $('#iva').keyup(function(){ 
+        var subtotal = ($('#subtotal').val() === "") ? 0 : parseFloat($('#subtotal').val());
+        let iva = ($('#iva').val() === "") ? 0 : parseFloat($('#iva').val());
+        let total = subtotal + iva;
+        $('#total').val(total.toFixed(2));
+     });
 
+     
     $(document).on('click', '.li-producto', function(){  
         const product =$(this).text()
         $('#producto').val(product);  

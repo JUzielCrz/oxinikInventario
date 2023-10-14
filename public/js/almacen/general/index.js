@@ -90,108 +90,12 @@ $(document).ready(function () {
             {data: 'precio_compra'},
             {data: 'precio_venta'},
             {data: 'precio_minimo'},
-        ]
+        ],
+        createdRow: function (row, data, dataIndex) {
+            $(row).find('td:eq(8)').addClass('color-especial'); 
+            $(row).find('td:eq(9)').addClass('color-especial'); 
+        }
     });
 
-    // $(document).on("click",".btn-class-edit", llenar_campos_edit);
-    // $(document).on("click","#btn-update", update_fila);
-
-    // $(document).on("click",".btn-class-stock", llenar_campo_stock);
-    // $(document).on("click","#btn-update-stock", update_stock);
-
-
-    // function llenar_campos_edit() {
-    //     $.get('/almacen/show/' + $(this).data('id') , function(msg) {
-    //         $.each(msg.data, function (key, value) {
-    //             var variable = "#" + key;
-    //             $(variable).val(value);
-    //         });
-    //     })
-    //     $("#modal-edit").modal("show");
-    // }
-
-    // function update_fila(){
-    //     $.ajax({
-    //         method: "POST",
-    //         url: "update",
-    //         data: $("#form-edit-almacen").serialize()
-    //     }).done(function (msg) {
-    //             mensaje_succes('#modal-edit');
-    //             listtabla.ajax.reload(null,false);     
-
-    //         }).fail(function (jqXHR) {
-    //             mensaje_error('Verifica tus datos!');
-    //             var status = jqXHR.status;
-    //             if (status === 422) {
-    //                 $.each(jqXHR.responseJSON.errors, function (key, value) {
-    //                     var idError = "#" + key ;
-    //                     $(idError).addClass('is-invalid');
-    //                 });
-    //             }
-    //         });
-    //     return false;
-    // }
-
-    // function llenar_campo_stock(){
-    //     $.get('/almacen/show/' + $(this).data('id') , function(msg) { 
-    //         $('#idAlmacen_stock').val(msg.data.idAlmacen);
-    //     })
-        
-    //     $("#modal-edit-stock").modal("show");
-
-    // }
-
-    // function update_stock(){
-    //     if($("#cantidad_update").val() == "" || $("#insidencia").val() == ""){
-    //         mensaje_error('Favor de rellenar todos los campos');
-    //         return false;
-    //     }
-
-    //     $.ajax({
-    //         method: "POST",
-    //         url: "/almacen/update_stock",
-    //         data: {
-    //             '_token': $('input[name=_token]').val(),
-    //             'idAlmacen': $("#idAlmacen_stock").val(),
-    //             'insidencia': $('#insidencia').val(),
-    //             'cantidad': $('#cantidad_update').val()
-    //             },
-    //     }).done(function (msg) {
-    //         if(msg.mensaje == "success") {
-    //             mensaje_succes('#modal-edit-stock');
-    //             listtabla.ajax.reload(null,false);  
-    //             $('#insidencia').val("");
-    //             $('#cantidad_update').val("");
-    //             $('#idAlmacen_stock').val("");
-    //         }else{
-    //             mensaje_error('No puedes disminuir esta cantidad');
-    //         }
-    //         }).fail(function (jqXHR) {
-    //             mensaje_error('Verifica tus datos!');
-    //         });
-    //     return false;
-
-    // }
-
-    // function mensaje_succes(modal) {
-    //     $(modal).modal("hide");
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: 'Guardado Correctamente',
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //     })
-    // }
-
-    // function mensaje_error(mensaje) {
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: "Error",
-    //         text: mensaje,
-    //         width: '20rem',
-    //         // showConfirmButton: true,
-    //     })
-    // }
-
-
+    
 });

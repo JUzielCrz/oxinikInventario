@@ -63,11 +63,13 @@
                             <thead style="font-size:12px">
                                 <tr>
                                     <th>PRODUCTO</th>
-                                    <th>U.M.</th>
+                                    <th>STOCK UM-1</th>
+                                    <th>STOCK UM-2</th>
                                     <th>CLAVE SAT</th>
-                                    <th>STOCK</th>
-                                    <th>P.VENTA</th>
-                                    <th>P.MINIMO</th>
+                                    <th>MENUDEO</th>
+                                    <th>MAYOREO</th>
+                                    <th>OBS FISCAL</th>
+                                    <th>OBS</th>
                                 </tr>
                             </thead>
                         </table>

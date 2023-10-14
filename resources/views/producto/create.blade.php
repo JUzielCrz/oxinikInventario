@@ -58,6 +58,7 @@
                 <option value="pza">pza</option>
                 <option value="rollo">rollo</option>
                 <option value="unidad">unidad</option>
+                <option value="carga">carga</option>
             </select>
         </div>
     </div>

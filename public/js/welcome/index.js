@@ -10,11 +10,40 @@ $(document).ready(function () {
         ajax: '/inicio/data',
         columns:[
             {data: 'nombre'},
-            {data: 'unidad_medida'},
+            //sumStock
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return data.sumStock + ' ' + data.unidad_medida_base;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if(data.unidad_conversion != null && data.unidad_medida_secundaria != null){
+                        const um2 = data.sumStock / data.unidad_conversion
+                        return  um2  + ' ' + data.unidad_medida_secundaria;
+                    }else{
+                        return "-"
+                    }
+                }
+            },
+
             {data: 'clave_sat'},
-            {data: 'sumStock'},
-            {data: 'precio_venta'},
-            {data: 'precio_minimo'},
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '$ '+data.precio_venta ;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '$ '+data.precio_minimo ;
+                }
+            },
+            {data: 'observaciones_no_fiscal'},
+            {data: 'observaciones_fiscal'},
         ]
     });
 

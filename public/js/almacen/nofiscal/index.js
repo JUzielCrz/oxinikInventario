@@ -91,7 +91,11 @@ $(document).ready(function () {
             {data: 'observaciones'},
             {data: 'btn-edit' },
             {data: 'btn-stock'},
-        ]
+        ],
+        createdRow: function (row, data, dataIndex) {
+            $(row).find('td:eq(8)').addClass('color-especial'); 
+            $(row).find('td:eq(9)').addClass('color-especial'); 
+        }
     });
 
     $(document).on("click",".btn-class-edit", llenar_campos_edit);

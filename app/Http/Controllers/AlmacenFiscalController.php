@@ -35,7 +35,7 @@ class AlmacenFiscalController extends Controller
     public function show($id){
         $data=Producto::
         leftjoin('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
-        ->select('almacen_fiscal.*', 'almacen_fiscal.id as idAlmacen','producto.nombre','producto.clave_sat', 'unidad_medida', 'producto.id as idProducto')
+        ->select('almacen_fiscal.*', 'almacen_fiscal.id as idAlmacen','producto.nombre','producto.clave_sat', 'unidad_medida_base', 'producto.id as idProducto')
         ->where('producto.id',$id)
         ->first();
         return response()->json(['data'=>$data]);
@@ -43,11 +43,11 @@ class AlmacenFiscalController extends Controller
 
     public function update(Request $request)
     {
-            $almacen=AlmacenFiscal::find($request->idAlmacen);
-            $almacen->observaciones = $request->observaciones;
-            if($almacen->save()){
-                return response()->json(['mensaje'=>'Editado Correctamente']);
-            };
+        $almacen=AlmacenFiscal::find($request->idAlmacen);
+        $almacen->observaciones = $request->observaciones;
+        if($almacen->save()){
+            return response()->json(['mensaje'=>'Editado Correctamente']);
+        };
     }
 
     public function update_stock(Request $request){

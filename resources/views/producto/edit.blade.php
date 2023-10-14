@@ -19,6 +19,19 @@
             <label for="">Unidad conversión</label>
             <input type="number" name="unidad_conversion" id="unidad_conversion" class="form-control form-control-sm numero-decimal-positivo" placeholder="#" disabled>
         </div>
+        <div class="form-group col-6">
+            <label for="">U.M.</label>
+            <select name="unidad_medida_edit" id="unidad_medida_edit" class="form-control form-control-sm" required>
+                <option value="">Selecciona</option>
+                <option value="m3">m3</option>
+                <option value="pza">pza</option>
+                <option value="kg">kg</option>
+                <option value="litros">litros</option>
+                <option value="kit">kit</option>
+                <option value="unidad">unidad</option>
+                <option value="carga">carga</option>
+            </select>
+        </div>
         <div class="form-group col">
             <label for="">Unidad Secundaria</label> <br>
             <input type="text" class="form-control"  name="unidad_medida_secundaria" id="unidad_medida_secundaria" disabled>

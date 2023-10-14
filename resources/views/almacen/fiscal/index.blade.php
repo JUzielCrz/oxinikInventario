@@ -2,6 +2,12 @@
 
 @section('content-sidebar')
 
+<style>
+    .color-especial {
+        background-color: #D5F5E3; /* Cambia "red" al color que deseas */
+        }
+</style>
+
 <ul class="nav nav-tabs justify-content-center mt-2">
     @include('almacen.submenu')
 </ul>

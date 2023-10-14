@@ -1,7 +1,6 @@
 @extends('layouts.sidebar')
 
 @section('content-sidebar')
-<div class="container">
 <form id="form-compra">
     @csrf
     
@@ -143,7 +142,6 @@
         </div>
     </div>
 </form>
-</div>          
 
 
 

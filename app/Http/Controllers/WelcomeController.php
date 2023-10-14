@@ -15,23 +15,20 @@ class WelcomeController extends Controller
         return view('welcome', compact('config'));
     }
 
-    public function data(){
-        $almacen=Producto::
-        leftjoin('almacen','producto.id','=','almacen.producto_id')
-        ->leftjoin('almacen_fiscal','producto.id','=','almacen_fiscal.producto_id')
-        ->select(
-            'almacen.id as idAlmacen',
-            'producto.*',
-            'producto.id as idProducto', 
-            // DB::raw(
-            //     '
-            //     (almacen.stock + almacen_fiscal.stock) as sumStock,
-            //     (sumStock / producto.unidad_conversion) as sumStock2,
-            //     ')
-        );
-        return DataTables::of(
-            $almacen
-        )                                                               
-        ->toJson();
-    }
+    public function data()
+{
+    $almacen = Producto::leftJoin('almacen', 'producto.id', '=', 'almacen.producto_id')
+            ->leftJoin('almacen_fiscal', 'producto.id', '=', 'almacen_fiscal.producto_id')
+            ->select([
+                'producto.*',
+                'producto.id as idProducto',
+                DB::raw('GROUP_CONCAT(almacen.observaciones) as observaciones_no_fiscal'),
+                DB::raw('GROUP_CONCAT(almacen_fiscal.observaciones) as observaciones_fiscal'),
+                DB::raw('sum(almacen.stock + almacen_fiscal.stock) as sumStock')
+            ])->groupBy('producto.id'); // Agrupar por la columna id del producto
+
+    return DataTables::of($almacen)->toJson();
+}
+
+
 }
