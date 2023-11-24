@@ -59,6 +59,7 @@ Route::get('/compra/nota/edit/{id}', 'CompraController@edit')->name('compras.not
 Route::post('/compra/nota/update/product_add/{nota_id}', 'CompraController@product_add')->name('compras.nota.update.product_add');
 Route::post('/compra/nota/update/encabezado/{nota_id}', 'CompraController@update_encabezado')->name('compras.nota.update_encabezado');
 Route::get('/compra/nota/product/delete/{id}', 'CompraController@nota_product_delete')->name('compras.nota.product.delete');
+Route::delete('/compra/nota/destroy/{id}', 'CompraController@destroy')->name('compras.nota.destroy');
 
 /* Venta */
 Route::get('/venta/index', 'VentaController@index');
@@ -68,6 +69,8 @@ Route::post('/venta/save', 'VentaController@save');
 Route::get('/venta/nota/lista', 'VentaController@index_nota');
 Route::get('/venta/nota/data', 'VentaController@nota_data');
 Route::get('/venta/nota/show/{id}', 'VentaController@nota_show')->name('venta.nota.show');
+Route::delete('/venta/nota/destroy/{id}', 'VentaController@destroy')->name('venta.nota.destroy');
+
 
 /* Almacen */
 Route::get('/almacen/general/index', 'AlmacenGeneralController@index');

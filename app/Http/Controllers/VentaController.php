@@ -147,10 +147,10 @@ class VentaController extends Controller
         return DataTables::of(
             $notas
         )
-        ->addColumn( 'btnShow', '<a class="btn btn-sm btn-verde" href="{{route(\'venta.nota.show\', $idVenta)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>')
+        ->addColumn( 'buttons', '<a class="btn btn-sm btn-verde" href="{{route(\'venta.nota.show\', $idVenta)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>'.
+                                '<button class="btn btn-sm btn-destroy" data-id="{{$idVenta}}"  data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash"></i></button>')
         // ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit btn-xs" data-id="{{$idProducto}}"><span class="far fa-eye"></span></button>')
-        // ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-xs" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
-        ->rawColumns(['btnShow'])
+        ->rawColumns(['buttons'])
         ->toJson();
     }
     public function nota_show($idVenta){
@@ -162,4 +162,36 @@ class VentaController extends Controller
         $data=["nota"=>$nota, "productos"=>$productos];
         return view('venta.notas.show', $data);
     }
+
+    
+    public function destroy(Venta $id){
+
+        $ventaProductos = VentaProducto::where('venta_id',$id->id)->get();
+        foreach ($ventaProductos as $ventaProducto) {
+            $productoId = $ventaProducto->producto_id;
+            $cantidadVenta = $ventaProducto->cantidad;
+            if( $ventaProducto->facturado == 'SI'){
+                $stock_almacen = AlmacenFiscal::where('producto_id',$productoId)->first();
+                $suma=$stock_almacen->stock + $cantidadVenta;
+                $sumaEntradas=$stock_almacen->entradas + $cantidadVenta;
+                $stock_almacen->stock = $suma;
+                $stock_almacen->entradas = $sumaEntradas;
+                $stock_almacen->save();
+            }
+            if( $ventaProducto->facturado == 'NO'){
+                $stock_almacen = Almacen::where('producto_id',$productoId)->first();
+                $suma=$stock_almacen->stock +  $cantidadVenta;
+                $suma_tradas=$stock_almacen->entradas + $cantidadVenta;
+
+                $stock_almacen->stock = $suma;
+                $stock_almacen->entradas = $suma_tradas;
+                $stock_almacen->save();
+                
+            }
+        }
+
+        VentaProducto::where('venta_id',$id->id)->delete();
+        $id->delete();
+    }
+
 }

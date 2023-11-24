@@ -10,11 +10,12 @@ class VentaProducto extends Model
     public $timestamps =  true;
     protected $fillable = ['id',
                         'venta_id',
-                        'producto',
+                        'producto_id',
                         'cantidad', 
                         'subtotal',
                         'iva',
-                        'total'
+                        'total',
+                        'facturado'
                         ];
     public $incrementing = true;
 }

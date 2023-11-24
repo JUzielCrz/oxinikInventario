@@ -147,11 +147,12 @@ class CompraController extends Controller
         return DataTables::of(
             $notas
         )
-        ->addColumn( 'btnShow', '<a class="btn btn-sm btn-verde" href="{{route(\'compras.nota.show\', $idCompra)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>'.
-        '<a class="btn btn-edit"  href="{{route(\'compras.nota.edit\', $idCompra)}}" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></a>')
+        ->addColumn( 'buttons', '<a class="btn btn-sm btn-verde" href="{{route(\'compras.nota.show\', $idCompra)}}" data-toggle="tooltip" data-placement="top" title="Nota"><span class="fas fa-clipboard"></span></a>'.
+        '<a class="btn btn-edit"  href="{{route(\'compras.nota.edit\', $idCompra)}}" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></a>'.
+        '<button class="btn btn-sm btn-destroy" data-id="{{$idCompra}}"  data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash"></i></button>')
         // ->addColumn( 'btn-edit', '<button class="btn btn-outline-secondary btn-class-edit " data-id="{{$idCompra}}"><span class="far fa-eye"></span></button>')
         // ->addColumn( 'btn-stock', '<button class="btn btn-outline-secondary btn-class-stock btn-xs" data-id="{{$idProducto}}"><i class="fas fa-exchange-alt fa-rotate-90"></i></span></button>')
-        ->rawColumns(['btnShow'])
+        ->rawColumns(['buttons'])
         ->toJson();
     }
     public function nota_show($idCompra){
@@ -287,6 +288,34 @@ class CompraController extends Controller
         if($productos->delete()){
             return response()->json(['mensaje'=>'Eliminado Correctamente']);
         }
+    }
+
+    public function destroy(Compra $id){
+        
+        $compraProductos = CompraProducto::where('compra_id',$id->id)->get();
+        foreach ($compraProductos as $compraProducto) {
+            $productoId = $compraProducto->producto_id;
+            $cantidadCompra = $compraProducto->cantidad;
+            if( $compraProducto->facturado == 'SI'){
+                $stock_almacen = AlmacenFiscal::where('producto_id',$productoId)->first();
+                $suma=$stock_almacen->stock - $cantidadCompra;
+                $sumaEntradas=$stock_almacen->entradas - $cantidadCompra;
+                $stock_almacen->stock = $suma;
+                $stock_almacen->entradas = $sumaEntradas;
+                $stock_almacen->save();
+            }
+            if( $compraProducto->facturado == 'NO'){
+                $stock_almacen = Almacen::where('producto_id',$productoId)->first();
+                $suma=$stock_almacen->stock -  $cantidadCompra;
+                $suma_tradas=$stock_almacen->entradas - $cantidadCompra;
+                $stock_almacen->stock = $suma;
+                $stock_almacen->entradas = $suma_tradas;
+                $stock_almacen->save();
+            }
+        }
+
+        CompraProducto::where('compra_id',$id->id)->delete();
+        $id->delete();
     }
 
 }

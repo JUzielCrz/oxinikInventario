@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(AdminSeeder::class);
+        $this->call(ProveedoresSeeder::class);
+        $this->call(ClientesSeeder::class);
+        // $this->call(ProductosSeeder::class);
 
         Config::create([
             'name'      => 'Mi empresa',

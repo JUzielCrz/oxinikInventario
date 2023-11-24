@@ -20,6 +20,7 @@
                                 <th>Fecha</th>
                                 <th>Total</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
