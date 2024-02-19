@@ -163,7 +163,7 @@ $(document).ready(function () {
         var sum_totales = 0;
 
         $(".tr-class-producto").each(function(){
-            var precio_producto=$(this).find("td")[4].innerHTML;
+            var precio_producto=$(this).find("td")[5].innerHTML;
             sum_totales=sum_totales+parseFloat(precio_producto);
         })
         $('#h5-total-general').replaceWith(
