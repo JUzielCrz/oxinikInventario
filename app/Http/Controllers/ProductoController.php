@@ -86,8 +86,8 @@ class ProductoController extends Controller
         $producto->nombre = $request->nombre;
         $producto->clave_sat = $request->clave_sat;
         // $producto->unidad_medida_base = $request->unidad_medida_base;
-        $producto->unidad_medida_secundaria = $request->unidad_medida_secundaria;
-        $producto->unidad_conversion = $request->unidad_conversion;
+        // $producto->unidad_medida_secundaria = $request->unidad_medida_secundaria;
+        // $producto->unidad_conversion = $request->unidad_conversion;
         $producto->precio_compra = $request->precio_compra;
         $producto->precio_venta = $request->precio_venta;
         $producto->precio_minimo = $request->precio_minimo;

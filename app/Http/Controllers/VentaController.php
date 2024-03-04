@@ -111,6 +111,7 @@ class VentaController extends Controller
                 $buyProducts->venta_id = $venta->id;
                 $buyProducts->producto_id = $producto_id;
                 $buyProducts->cantidad = $quantity_stock;
+                $buyProducts->unidad_medida =  $request->arrUnidadMedidaTexto[$indice];
                 $buyProducts->subtotal = $request->arrSubTotal[$indice];
                 $buyProducts->iva = $request->arrIva[$indice];
                 $buyProducts->total = $request->arrTotal[$indice];
@@ -158,7 +159,12 @@ class VentaController extends Controller
         join('cliente', 'cliente.id','=', 'venta.cliente_id')
         ->select('cliente.nombre as cliente','venta.*')
         ->where('venta.id',$idVenta)->first();
-        $productos=VentaProducto::where('venta_id',$idVenta)->get();
+        
+        $productos=VentaProducto::
+        join("producto","producto.id","venta_productos.producto_id")
+        ->select("producto.nombre", "venta_productos.*")
+        ->where('venta_id',$idVenta)->get();
+
         $data=["nota"=>$nota, "productos"=>$productos];
         return view('venta.notas.show', $data);
     }

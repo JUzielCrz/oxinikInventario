@@ -40,6 +40,7 @@
                                 <th>id</th>
                                 <th>PODUCTO</th>
                                 <th>CANTIDAD</th>
+                                <th>U.M.</th>
                                 <th>SUBTOTAL</th>
                                 <th>IVA</th>
                                 <th>TOTAL</th>
@@ -50,8 +51,9 @@
                             @foreach ($productos as $producto)
                                 <tr>
                                     <td>{{$producto->id}}</td>
-                                    <td>{{$producto->producto_id }}</td>
+                                    <td>{{$producto->nombre}}</td>
                                     <td>{{$producto->cantidad}}</td>
+                                    <td>{{$producto->unidad_medida}}</td>
                                     <td>{{$producto->subtotal}}</td>
                                     <td>{{$producto->iva}}</td>
                                     <td>{{$producto->total}}</td>

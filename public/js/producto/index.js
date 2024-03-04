@@ -76,6 +76,8 @@ $(document).ready(function () {
     function llenar_campos_edit() {
         remove_class_invalid("_edit");
         $.get('/producto/show/' + $(this).data('id') , function(msg) {
+            console.log(msg)
+
             $.each(msg.data, function (key, value) {
                 var variable = "#" + key + "_edit";
                 $(variable).val(value);
@@ -94,7 +96,9 @@ $(document).ready(function () {
                 'id': $('#id_edit').val(),
                 'nombre': $('#nombre_edit').val(),
                 'clave_sat': $('#clave_sat_edit').val(),
-                'unidad_medida': $('#unidad_medida_edit').val(),
+                'unidad_medida_base': $('#unidad_medida_base_edit').val(),
+                'unidad_medida_secundaria': $('#unidad_medida_secundaria_edit').val(),
+                'unidad_conversion': $('#unidad_conversion_edit').val(),
                 'precio_compra': $('#precio_compra_edit').val(),
                 'precio_venta': $('#precio_venta_edit').val(),
                 'precio_minimo': $('#precio_minimo_edit').val(),

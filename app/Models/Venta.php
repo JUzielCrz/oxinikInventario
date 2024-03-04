@@ -12,6 +12,7 @@ class Venta extends Model
                         'fecha',
                         'cliente_id',
                         'total_general',
+                        'unidad_medida',
                         'observaciones'
                         ];
     public $incrementing = true;

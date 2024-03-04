@@ -24,6 +24,7 @@ class CreateVentaProductosTable extends Migration
                 ->on('producto')
                 ->onDelete('restrict');
             $table->float('cantidad');
+            $table->string('unidad_medida')->nullable();
             $table->float('subtotal');
             $table->float('iva');
             $table->float('total')->nullable();
