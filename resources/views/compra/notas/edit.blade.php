@@ -2,7 +2,7 @@
 
 @section('content-sidebar')
 <div class="container">
-   
+
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -40,12 +40,12 @@
                         <label for="">Fecha</label>
                         <input type="date" name="fecha" id="fecha" value="{{$nota->fecha}}" class="form-control form-control-sm"  disabled>
                     </div>
-                    
+
                     <div class="col form-group align-self-end">
                         <button class="btn btn-sm btn-amarillo mr-1" id='btn_edit_encabezado' type="button">Editar</button>
                         <button class="btn btn-sm btn-amarillo " id='btn_guardar_encabezado' type="button" disabled >Guardar</button>
                     </div>
-                    
+
                 </div>
 
             </form>
@@ -55,7 +55,7 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <label for="">Producto</label> 
+                        <label for="">Producto</label>
                         <input type="text" id="producto" name="producto" class="form-control form-control-sm" placeholder="Nombre">
                         <div id="listar-productos"></div>
                     </div>
@@ -93,7 +93,7 @@
                     <div class="col form-group align-self-end">
                         <button type="button" class="btn btn-amarillo" id="btn-anadir-producto">Agregar</button>
                     </div>
-                    
+
                 </div>
             </form>
             <hr>
@@ -113,10 +113,13 @@
                     </thead>
                     <tbody>
                         @foreach ($productos as $producto)
+                        @php
+                            $cantidad_en_unidad_deseada = ($producto->unidad_conversion != 0) ? $producto->cantidad / $producto->unidad_conversion : 0;
+                        @endphp
                         <tr class="tr-class-producto">
                             <td>{{$producto->nombre }}</td>
                             <td>{{$producto->cantidad}} {{$producto->unidad_medida_base}}</td>
-                            <td>{{$producto->cantidad / $producto->unidad_conversion}} {{$producto->unidad_medida_secundaria}}</td>
+                            <td>{{$cantidad_en_unidad_deseada}} {{$producto->unidad_medida_secundaria}}</td>
                             <td>{{$producto->subtotal}}</td>
                             <td>{{$producto->iva}}</td>
                             <td>{{$producto->total}}</td>
@@ -144,12 +147,12 @@
                     <input type="hidden" name="total_general" id="total_general" value=0>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
 </form>
-</div>          
+</div>
 
 
 
